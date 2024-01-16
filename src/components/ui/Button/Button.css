@@ -1,0 +1,47 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  height: 32px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 500;
+  background: #3b82f6;
+  color: #eff6ff;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 20ms ease-in 0s;
+}
+
+.button:hover,
+.button:focus {
+  opacity: 0.85;
+}
+
+.button-ghost {
+  background: transparent;
+  color: #3b82f6;
+  border: 1px solid #3b82f6;
+}
+
+.button-ghost:hover,
+.button-ghost:focus {
+  background: #3b82f6;
+  color: #eff6ff;
+}
+
+.button-link {
+  background: transparent;
+  color: #3b82f6;
+  border: none;
+  text-decoration: underline;
+}
+
+.button-link:hover,
+.button-link:focus {
+  opacity: 0.1;
+}

@@ -7,9 +7,9 @@ import { Stack } from "../components/layouts/Stack/Stack";
 import { Grid } from "../components/layouts/Grid/Grid";
 
 // Blocks
-import { Card } from "../components/blocks/Card/Card";
-import { Navbar } from "../components/blocks/Navbar/Navbar";
-import { Footer } from "../components/blocks/Footer/Footer";
+import { Card } from "../components/ui/Card";
+import { Navbar } from "../components/ui/Navbar";
+import { Footer } from "../components/ui/Footer";
 
 export const Home = () => {
   const [photos, setPhotos] = useState(null);
@@ -59,11 +59,14 @@ export const Home = () => {
               url={photo.url}
               desc={photo.description}
               name={photo.name}
+              id={photo.id}
             />
           ))}
         </Grid>
 
-        <Footer />
+        <div>
+          <Footer />  
+        </div>
       </Stack>
     </Wrapper>
   )

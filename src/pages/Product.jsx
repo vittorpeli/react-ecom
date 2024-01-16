@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 //Layouts
 import { Stack } from "../components/layouts/Stack/Stack"
@@ -7,10 +8,10 @@ import { Wrapper } from "../components/layouts/Wrapper/Wrapper"
 //Blocks
 import { Footer } from "../components/ui/Footer"
 import { Navbar } from "../components/ui/Navbar"
-import { Button } from "../components/ui/Button"
+import { Button } from "../components/ui/Button/Button"
 
-export const Product = ({ match }) => {
-  const { id } = match.params;
+export const Product = () => {
+  const { id } = useParams();
   const [photos, setPhotos] = useState(null);
 
   const getPhotos = async () => {
@@ -35,7 +36,8 @@ export const Product = ({ match }) => {
 
   useEffect(() => {
     getPhotos();
-  }, [id])
+    console.log(id);
+  }, [id]);
 
   if (!photos) {
     return <div>Loading...</div>;
@@ -60,9 +62,19 @@ export const Product = ({ match }) => {
             <p>{photos.description}</p>
           </figcaption>
         </figure>
+        <div>
         <Button variant="link" href="/">
           Return
         </Button>
+        <div>
+          <Button href="/">
+            Add to Cart
+          </Button>
+          <Button href="/">
+            Buy
+          </Button>
+        </div>
+        </div>
 
         <div>
           <Footer />
