@@ -44,7 +44,10 @@ function App() {
   return (
     <Wrapper>
       <Stack>
-        <Navbar/>
+        <div>
+          <Navbar/>
+        </div>
+        
 
         <Wrapper>
           <h3>Sparrow Photography</h3>
@@ -55,7 +58,8 @@ function App() {
             <Card 
               key={photo.id}
               url={photo.url}
-              title={photo.title}
+              title={photo.description}
+              name={photo.name}
             />
           ))}
         </Grid>

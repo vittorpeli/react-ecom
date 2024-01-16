@@ -1,5 +1,7 @@
 
-export const Button = ({ variant, children, onClick }) => {
+export const Button = ({ variant, className, children, onClick, href }) => {
+  const btnClass = `${className} || ''`;
+
   const getStyles = () => {
     // Default styles
     let styles = {
@@ -12,29 +14,43 @@ export const Button = ({ variant, children, onClick }) => {
       fontSize: '14px',
       lineHeight: '1.2',
       fontWeight: '500',
-      backgroundColor: '#3b82f6',
-      color: 'white',
-      border: 'none',
+      background: '#3b82f6',
+      color: '#eff6ff',
+      border: '1px solid rgba(255, 255, 255, 0.13)',
+      borderRadius: '4px',
       cursor: 'pointer',
       textDecoration: 'none',
-      transition: 'background 20ms ease-in 0s'
     };
 
     // Variant-specific styles
     if (variant === 'ghost') {
       styles.backgroundColor = 'transparent';
-      styles.border = '1px solid rgba(255, 255, 255, 0.13)';
+      styles.color = '#3b82f6';
+      styles.border = '1px solid #3b82f6';
     } else if (variant === 'link') {
       styles.backgroundColor = 'transparent';
+      styles.border = 'none';
+      styles.color = '#3b82f6';
       styles.textDecoration = 'underline';
     }
 
     return styles;
   };
 
-  return (
-    <button style={getStyles()} onClick={onClick}>
-      {children}
-    </button>
-  );
+  const renderButton = () => {
+    if(href) {
+      return (
+        <a className={btnClass} href={href} style={{ ...getStyles(), transition: 'background 200ms ease-in 0s' }}>
+          {children}
+        </a>
+      );
+    }else {
+      return (
+      <button className={btnClass} style={{...getStyles(), transition: '20ms ease-in 0s'}} onClick={onClick}>
+        {children}
+      </button>
+      );
+    }
+  };
+  return renderButton();
 };
