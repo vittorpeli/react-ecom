@@ -12,7 +12,7 @@ export const Button = ({ variant, children, onClick }) => {
       fontSize: '14px',
       lineHeight: '1.2',
       fontWeight: '500',
-      backgroundColor: 'blue',
+      backgroundColor: '#3b82f6',
       color: 'white',
       border: 'none',
       cursor: 'pointer',

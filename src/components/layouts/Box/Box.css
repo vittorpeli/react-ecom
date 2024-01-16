@@ -2,6 +2,7 @@
   --border-thin: 1px;
   padding: var(--s1);
   border: var(--border-thin) solid;
+  border-radius: 0.5rem;
   outline: var(--border-thin) transparent;
   outline-offset: calc(var(--border-thin) * -1);
 
