@@ -1,17 +1,17 @@
-//JS
+//  React
 import { useEffect, useState } from "react";
 
 // Layouts
-import { Wrapper } from "./components/layouts/Wrapper/Wrapper";
-import { Stack } from "./components/layouts/Stack/Stack";
-import { Grid } from "./components/layouts/Grid/Grid";
+import { Wrapper } from "../components/layouts/Wrapper/Wrapper";
+import { Stack } from "../components/layouts/Stack/Stack";
+import { Grid } from "../components/layouts/Grid/Grid";
 
 // Blocks
-import { Navbar } from "./components/ui/Navbar";
-import { Footer } from "./components/ui/Footer";
-import { Card } from "./components/ui/Card";
+import { Card } from "../components/blocks/Card/Card";
+import { Navbar } from "../components/blocks/Navbar/Navbar";
+import { Footer } from "../components/blocks/Footer/Footer";
 
-function App() {
+export const Home = () => {
   const [photos, setPhotos] = useState(null);
   // const [loading, setLoading] = useState(true);
 
@@ -63,12 +63,8 @@ function App() {
           ))}
         </Grid>
 
-        <div>
-          <Footer />
-        </div>
+        <Footer />
       </Stack>
     </Wrapper>
   )
 }
-
-export default App

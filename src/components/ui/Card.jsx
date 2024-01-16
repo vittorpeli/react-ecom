@@ -15,12 +15,12 @@ export const Card = (props) => {
           <h2>
             <a 
               className="focus:underline" 
-              href={props.url}
+              href={props.desc}
             >
               {props.name}
             </a>
           </h2>
-          <p>{props.title}</p>
+          <p>{props.desc}</p>
           <span>By Jack Sparrow</span>
         </div>
 
