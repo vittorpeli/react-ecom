@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 //Layouts
 import { Stack } from "../components/layouts/Stack/Stack"
@@ -9,6 +9,8 @@ import { Wrapper } from "../components/layouts/Wrapper/Wrapper"
 import { Footer } from "../components/ui/Footer"
 import { Navbar } from "../components/ui/Navbar"
 import { Button } from "../components/ui/Button/Button"
+
+import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 export const Product = () => {
   const { id } = useParams();
@@ -36,8 +38,8 @@ export const Product = () => {
 
   useEffect(() => {
     getPhotos();
-    console.log(id);
-  }, [id]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!photos) {
     return <div>Loading...</div>;
@@ -57,23 +59,27 @@ export const Product = () => {
         {/* Content */}
         <h2>{photos.name}</h2>
         <figure>
-          <img src={photos.url} alt={photos.name} />
-          <figcaption>
-            <p>{photos.description}</p>
-          </figcaption>
+          <Stack>
+            <img className="rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]" src={photos.url} alt={photos.name} />
+            <figcaption>
+              <p>{photos.description}</p>
+            </figcaption>
+          </Stack>
         </figure>
-        <div>
-        <Button variant="link" href="/">
-          Return
-        </Button>
-        <div>
-          <Button href="/">
-            Add to Cart
-          </Button>
-          <Button href="/">
-            Buy
-          </Button>
-        </div>
+        <div className="flex items-center justify-between">
+          <Link to="/">
+            <Button variant="link">
+              <span><ArrowLeft color="#3b82f6"/></span>Return
+            </Button>
+          </Link>
+          <div className="flex items-center justify-between">
+            <Button>
+              Add to Cart
+            </Button>
+            <Button className="ml-2">
+              Buy
+            </Button>
+          </div>
         </div>
 
         <div>
