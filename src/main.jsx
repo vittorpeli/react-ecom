@@ -8,6 +8,7 @@ import './global.css'
 import ErrorPage from './error-page.jsx';
 import { Product } from './pages/Product.jsx';
 import { Home } from './pages/Home.jsx';
+import { Cart } from './pages/Cart.jsx';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/photo/:id",
     element: <Product />
+  },
+  {
+    path: "/checkout",
+    element: <Cart />
   }
 ])
 

@@ -139,3 +139,26 @@ img,
 picture {
   height: auto;
 }
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border-collapse: collapse;
+  padding: 0.75rem;
+}
+
+th {
+  border-bottom: 2px solid #000;
+  text-align: left;
+  font-weight: bold;
+  background: #1e3a8a;
+  color: #fff;
+}
+
+td {
+  border-top: 1px solid #000;
+  text-align: center;
+}

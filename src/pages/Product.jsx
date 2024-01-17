@@ -79,9 +79,11 @@ export const Product = () => {
             <Button>
               Add to Cart
             </Button>
-            <Button className="ml-2">
-              Buy
-            </Button>
+            <Link to="/checkout">
+              <Button className="ml-2">
+                Buy
+              </Button>
+            </Link>
           </div>
         </div>
 
