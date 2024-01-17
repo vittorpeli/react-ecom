@@ -69,7 +69,10 @@ export const Product = () => {
         <div className="flex items-center justify-between">
           <Link to="/">
             <Button variant="link">
-              <span><ArrowLeft color="#3b82f6"/></span>Return
+              <span>
+                <ArrowLeft color="#3b82f6"/>
+              </span>
+              Return
             </Button>
           </Link>
           <div className="flex items-center justify-between">
