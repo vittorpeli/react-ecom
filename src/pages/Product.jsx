@@ -10,7 +10,7 @@ import { Footer } from "../components/ui/Footer"
 import { Navbar } from "../components/ui/Navbar"
 import { Button } from "../components/ui/Button/Button"
 
-import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft } from "@phosphor-icons/react";
 
 export const Product = () => {
   const { id } = useParams();
