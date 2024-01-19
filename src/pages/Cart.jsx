@@ -12,7 +12,7 @@ import { Button } from '../components/ui/Button/Button'
 
 export const Cart = () => {
   const [photos, setPhotos] = useState([])
-  const { getItemsInCart } = useContext(CartContext);
+  const { getItemsInCart, removeFromCart } = useContext(CartContext);
 
   const fetchPhotos = async () => {
     try {
@@ -29,9 +29,9 @@ export const Cart = () => {
   }, [])
 
   const handleDelete = (id) => {
-    const removeItem = photos.filter((item) => item.id !== id);
+    removeFromCart(id);
 
-    setPhotos(removeItem);
+    setPhotos((prevPhotos) => prevPhotos.filter((item) => item.id !== id));
   }
 
   const photosInCart = getItemsInCart(photos);

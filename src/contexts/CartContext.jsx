@@ -1,13 +1,25 @@
-import { createContext, useState} from "react";
+import { createContext, useEffect, useState} from "react";
 // import { PropTypes } from "prop-types";
 
 export const CartContext = createContext();
 
+const saveCartToLocalStorage = (cartItems) => {
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+};
+
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const storedCartItems = localStorage.getItem("cartItems");
+    return storedCartItems ? JSON.parse(storedCartItems) : [];
+  });
 
   const addToCart = (id) => {
     setCartItems((prevItems) => [...prevItems, id]);
+  }
+
+  const removeFromCart = (id) => {
+    const updatedCart = cartItems.filter((item) => item !== id);
+    setCartItems(updatedCart);
   }
 
   const inCart = (id) => {
@@ -24,17 +36,12 @@ export const CartProvider = ({ children }) => {
     });
   }
 
-  // const persistCart = () => {
-  //   localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  // }
-
-  // useEffect(() => {
-  //   persistCart();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [cartItems])
+  useEffect(() => {
+    saveCartToLocalStorage(cartItems);
+  }, [cartItems])
 
   return (
-    <CartContext.Provider value={{cartItems, addToCart, inCart, getItemsInCart, getCartItem}}>
+    <CartContext.Provider value={{addToCart, inCart, getItemsInCart, getCartItem, removeFromCart}}>
       {children}
     </CartContext.Provider>
   )

@@ -8,9 +8,8 @@ import { Button } from "./Button/Button"
 import { CartContext } from "../../contexts/CartContext" 
 
 export const Navbar = () => {
-  const cartContext = useContext(CartContext)
-  const { cartItems } = cartContext;
-  const cartCount = cartItems.length;
+  const { getCartItem } = useContext(CartContext);
+  const cartCount = getCartItem().length;
 
   return (
     <Wrapper>

@@ -1,9 +1,10 @@
 import express from "express";
 
+import './controllers/PhotosController.js'
+import PhotosController from "./controllers/PhotosController.js";
+
 const router = express.Router();
 
-router.get("/hello", (req, res) => {
-  res.status(200).json({ message: "Hello World" });
-})
+router.get("/photos", PhotosController.index)
 
 export default router;
