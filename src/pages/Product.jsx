@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { Link, useNavigate, useParams} from "react-router-dom";
+import { CartContext } from "../contexts/CartContext"
 
 //Layouts
 import { Stack } from "../components/layouts/Stack/Stack"
@@ -14,6 +15,11 @@ import { ArrowLeft } from "@phosphor-icons/react";
 
 export const Product = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const cartContext = useContext(CartContext);
+  const { addToCart } = cartContext;
+  
+
   const [photos, setPhotos] = useState(null);
 
   const getPhotos = async () => {
@@ -40,6 +46,16 @@ export const Product = () => {
     getPhotos();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleBuy = () => {
+    addToCart({
+      id: photos.id,
+      name: photos.name,
+      price: photos.price,
+    });
+
+    navigate("/checkout");
+  }
 
   if (!photos) {
     return <div>Loading...</div>;
@@ -80,7 +96,7 @@ export const Product = () => {
               Add to Cart
             </Button>
             <Link to="/checkout">
-              <Button className="ml-2">
+              <Button className="ml-2" onClick={handleBuy}>
                 Buy
               </Button>
             </Link>
