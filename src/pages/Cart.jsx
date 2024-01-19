@@ -10,9 +10,16 @@ import { Button } from '../components/ui/Button/Button'
 
 
 export const Cart = () => {
-  const [photos, setPhotos] = useState(null)
-  const cartContext = useContext(CartContext);
-  const { getCartItem } = cartContext;
+  const [photos, setPhotos] = useState([])
+  const [totalPrice, setTotalPrice] = useState("0")
+  const { getCartItem } = useContext(CartContext);
+
+  const calcTotalPrice = () => {
+    if (photos) {
+      const newTotalPrice = totalPrice + photos.price;
+      setTotalPrice(newTotalPrice);
+    }
+  }
 
   const getPhotos = async () => {
     const API = "https://vanillajsacademy.com/api/photos.json";
@@ -29,12 +36,16 @@ export const Cart = () => {
 
   useEffect(() => {
     getPhotos();
-
-    setPhotos(getCartItem());
+    const cartItem = getCartItem();
+    setPhotos(cartItem);
+    calcTotalPrice()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getCartItem])
 
-  const handleDelete = () => {
-    console.log("Clicked")
+  const handleDelete = (id) => {
+    const removeItem = photos.filter((item) => item.id !== id);
+
+    setPhotos(removeItem);
   }
 
   if (!photos) {
@@ -64,7 +75,7 @@ export const Cart = () => {
                   desc={item.description}
                   name={item.name}
                   price={item.price}
-                  onclick={handleDelete}
+                  onclick={() => handleDelete(item.id)}
                 />
               ))}
             </tbody>
@@ -72,7 +83,12 @@ export const Cart = () => {
               
         </Wrapper>
 
-        <div className="ml-auto mr-4">
+        
+
+        <div className="flex flex-row  items-center ml-auto mr-4">
+          <span className='font-semibold mr-4 mb-4'>
+            Total Price: ${totalPrice}
+          </span>
           <Button variant="ghost" className="mb-4">
             Finish Checkout
           </Button>

@@ -6,12 +6,12 @@ export const Table = ({ img, desc, name, price, onclick}) => {
 
   return (
     <tr>
-      <td>
-        <img className="max-h-full max-w-full rounded" src={img} alt={desc} />
+      <td className="h-1/2 w-1/2 max-h-1/2 max-w-1/2">
+        <img className="h-full w-full rounded" src={img} alt={desc} />
       </td>
-      <td>{name}</td>
-      <td className="font-semibold">${price}</td>
-      <td>
+      <td className="text-left h-1/2 max-h-1/2 max-w-1/2">{name}</td>
+      <td className="text-left font-semibold h-1/2 max-h-1/2 max-w-1/2">${price}</td>
+      <td className="h-1/2 max-h-1/2 max-w-1/2">
         <Button variant="ghost" onClick={onclick}>
           <Trash />
         </Button>

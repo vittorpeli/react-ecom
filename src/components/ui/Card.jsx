@@ -4,11 +4,11 @@ import { Button } from "./Button/Button";
 
 import { Link } from "react-router-dom";
 
-export const Card = (props) => {
+export const Card = ({ url, desc, id, name }) => {
   return (
     <Box className="cursor-pointer hover:shadow-xl focus:shadow-xl">
       <div className="h-20">
-          <img className="object-cover h-full w-full rounded-t-lg" src={props.url} alt={props.name} />
+          <img className="object-cover h-full w-full rounded-t-lg" src={url} alt={desc} />
       </div>
       <Stack className="py-2 px-3 flex-grow last:mt-auto [&>*:nth-last-child(2)]:mb-3">
         
@@ -17,17 +17,17 @@ export const Card = (props) => {
           <h2>
             <a 
               className="focus:underline" 
-              href={props.desc}
+              href={`/photo/${id}`}
             >
-              {props.name}
+              {name}
             </a>
           </h2>
-          <p>{props.desc}</p>
+          <p>{desc}</p>
           <span>By Jack Sparrow</span>
         </div>
 
         {/* <div> */}
-        <Link to={`/photo/${props.id}`}>
+        <Link to={`/photo/${id}`}>
           <Button variant="ghost">   
             Learn More
           </Button>

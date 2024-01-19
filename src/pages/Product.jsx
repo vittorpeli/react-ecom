@@ -20,7 +20,7 @@ export const Product = () => {
   const { addToCart } = cartContext;
   
 
-  const [photos, setPhotos] = useState(null);
+  const [photos, setPhotos] = useState([]);
 
   const getPhotos = async () => {
     const API = "https://vanillajsacademy.com/api/photos.json";
@@ -48,11 +48,7 @@ export const Product = () => {
   }, []);
 
   const handleBuy = () => {
-    addToCart({
-      id: photos.id,
-      name: photos.name,
-      price: photos.price,
-    });
+    addToCart(photos.id);
 
     navigate("/checkout");
   }
