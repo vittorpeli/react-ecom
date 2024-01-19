@@ -12,15 +12,7 @@ import { Button } from '../components/ui/Button/Button'
 
 export const Cart = () => {
   const [photos, setPhotos] = useState([])
-  const [totalPrice, setTotalPrice] = useState(0)
-  const { getCartItem } = useContext(CartContext);
-
-  const calcTotalPrice = () => {
-    if (photos) {
-      const newTotalPrice = parseInt((totalPrice + photos.price), 10);
-      setTotalPrice(newTotalPrice);
-    }
-  }
+  const { getItemsInCart } = useContext(CartContext);
 
   const fetchPhotos = async () => {
     try {
@@ -34,16 +26,18 @@ export const Cart = () => {
 
   useEffect(() => {
     fetchPhotos();
-    const cartItem = getCartItem();
-    setPhotos(cartItem);
-    calcTotalPrice()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getCartItem])
+  }, [])
 
   const handleDelete = (id) => {
     const removeItem = photos.filter((item) => item.id !== id);
 
     setPhotos(removeItem);
+  }
+
+  const photosInCart = getItemsInCart(photos);
+
+  if (!photosInCart) {
+    return <p>You have no photos in your cart</p>
   }
 
   if (!photos) {
@@ -66,7 +60,7 @@ export const Cart = () => {
         <Wrapper>
           <TableHead>
             <tbody>
-              {photos.map((item) => (
+              {photosInCart.map((item) => (
                 <Table
                   key={item.id}
                   img={item.url}
@@ -85,7 +79,7 @@ export const Cart = () => {
 
         <div className="flex flex-row  items-center ml-auto mr-4">
           <span className='font-semibold mr-4 mb-4'>
-            Total Price: ${totalPrice}
+            Total Price: ${photosInCart.reduce((total, item) => total + item.price, 0)}
           </span>
           <Button variant="ghost" className="mb-4" href="https://buy.stripe.com/test_00gfZydn3a71bFSfYY">
             Finish Checkout

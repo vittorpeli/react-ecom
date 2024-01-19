@@ -13,12 +13,14 @@ import { Navbar } from "../components/ui/Navbar";
 import { Footer } from "../components/ui/Footer";
 
 export const Home = () => {
-  const [photos, setPhotos] = useState(null);
+  const [photos, setPhotos] = useState([]);
   // const [loading, setLoading] = useState(true);
 
   const fetchPhotos = async () => {
     try {
+      console.log('Before fetching photos...');
       const photosData = await getPhotos();
+      console.log('After fetching photos:', photosData);
       setPhotos(photosData);
     } catch (error) {
       console.error('Error fetching photos:', error);
@@ -27,6 +29,7 @@ export const Home = () => {
   }
 
   useEffect(() => {
+    console.log("Fethcing photos...");
     fetchPhotos();
   }, [])
 

@@ -17,8 +17,7 @@ import { ArrowLeft } from "@phosphor-icons/react";
 export const Product = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const cartContext = useContext(CartContext);
-  const { addToCart } = cartContext;
+  const { addToCart, inCart } = useContext(CartContext);
 
   const [photos, setPhotos] = useState([]);
 
@@ -84,9 +83,15 @@ export const Product = () => {
             </Button>
           </Link>
           <div className="flex items-center justify-between">
-            <Button onClick={handleCart}>
-              Add to Cart: ${photos.price}
-            </Button>
+            {inCart(photos.id) ? (
+                <Link to="/checkout">
+                  <span>{`"${photos.name}"`} added to cart</span>
+                </Link>
+              ) : (
+                <Button onClick={handleCart}>
+                  Add to Cart: ${photos.price}
+                </Button>
+            )}
             <Link to="/checkout">
               <Button className="ml-2" onClick={handleBuy}>
                 Buy

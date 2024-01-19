@@ -11,7 +11,7 @@ export async function getPhotos() {
     const response = await fetch(API);
     const photosData = await response.json();
     setStorage(photosData);
-    return photos;
+    return photosData;
   } catch (error){
     throw error;
   } 
