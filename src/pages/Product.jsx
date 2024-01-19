@@ -93,7 +93,7 @@ export const Product = () => {
           </Link>
           <div className="flex items-center justify-between">
             <Button>
-              Add to Cart
+              Add to Cart: ${photos.price}
             </Button>
             <Link to="/checkout">
               <Button className="ml-2" onClick={handleBuy}>

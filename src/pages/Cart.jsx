@@ -6,6 +6,7 @@ import { Wrapper } from "../components/layouts/Wrapper/Wrapper"
 import { Navbar } from "../components/ui/Navbar"
 import { Table } from "../components/ui/Table"
 import { TableHead } from '../components/ui/TableHead'
+import { Button } from '../components/ui/Button/Button'
 
 
 export const Cart = () => {
@@ -70,6 +71,12 @@ export const Cart = () => {
           </TableHead>
               
         </Wrapper>
+
+        <div className="ml-auto mr-4">
+          <Button variant="ghost" className="mb-4">
+            Finish Checkout
+          </Button>
+        </div>
       </Stack>
     </Wrapper>
   )
