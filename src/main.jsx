@@ -12,6 +12,7 @@ import ErrorPage from './error-page.jsx';
 import { Product } from './pages/Product.jsx';
 import { Home } from './pages/Home.jsx';
 import { Cart } from './pages/Cart.jsx';
+import { SuccessPage } from './pages/SuccessPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/checkout",
     element: <Cart />
+  },
+  {
+    path: "/success",
+    element: <SuccessPage />
   }
 ])
 

@@ -36,12 +36,16 @@ export const CartProvider = ({ children }) => {
     });
   }
 
+  const clearCart = () => {
+    setCartItems([]);
+  }
+
   useEffect(() => {
     saveCartToLocalStorage(cartItems);
   }, [cartItems])
 
   return (
-    <CartContext.Provider value={{addToCart, inCart, getItemsInCart, getCartItem, removeFromCart}}>
+    <CartContext.Provider value={{addToCart, inCart, getItemsInCart, getCartItem, removeFromCart, clearCart}}>
       {children}
     </CartContext.Provider>
   )

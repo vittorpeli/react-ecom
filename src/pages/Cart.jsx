@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../contexts/CartContext'
 import { getPhotos } from '../utils/api'
+import { useNavigate } from 'react-router-dom'
 
 import { Stack } from "../components/layouts/Stack/Stack"
 import { Wrapper } from "../components/layouts/Wrapper/Wrapper"
@@ -11,8 +12,9 @@ import { Button } from '../components/ui/Button/Button'
 
 
 export const Cart = () => {
+  const navigate = useNavigate();
   const [photos, setPhotos] = useState([])
-  const { getItemsInCart, removeFromCart } = useContext(CartContext);
+  const { getItemsInCart, removeFromCart, clearCart } = useContext(CartContext);
 
   const fetchPhotos = async () => {
     try {
@@ -21,6 +23,32 @@ export const Cart = () => {
     } catch (error) {
       console.error('Error fetching photos:', error);
       setPhotos([]);
+    }
+  }
+
+  const checkout = async () => {
+    try {
+      const photosInCart = getItemsInCart(photos);
+      const cart = photosInCart.map((photo) => photo.id);
+
+      const stripeResponse = await fetch ("", {
+        method: 'POST',
+        headers: {
+          'Content-Type': "application/json"
+        },
+        body: JSON.stringify({
+          cart,
+          success_url: "/success",
+          cancel_url: "/checkout",
+        }),
+      });
+      const stripeSession = await stripeResponse.json();
+
+      clearCart();
+
+      window.location.href = stripeSession.url;
+    } catch (error) {
+      throw new Error;
     }
   }
 
