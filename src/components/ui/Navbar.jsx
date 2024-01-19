@@ -9,9 +9,11 @@ export const Navbar = () => {
     <Wrapper>
       <nav className="flex mt-4 py-4 px-0 items-center justify-between">
         <Link to="/" className="hover:underline focus:underline text-2xl"><Anchor size={36} color="#3b82f6"/></Link>
-        <Button variant="link">
-          <ShoppingCart size={24}/>
-        </Button>
+        <Link to="/checkout">
+          <Button variant="link">
+            <ShoppingCart size={24}/>
+          </Button>
+        </Link>
       </nav>
     </Wrapper>
   )

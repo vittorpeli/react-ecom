@@ -1,5 +1,6 @@
 //  React
 import { useEffect, useState } from "react";
+import { getPhotos } from "../utils/api";
 
 // Layouts
 import { Wrapper } from "../components/layouts/Wrapper/Wrapper";
@@ -15,21 +16,18 @@ export const Home = () => {
   const [photos, setPhotos] = useState(null);
   // const [loading, setLoading] = useState(true);
 
-  const getPhotos = async () => {
-    const API = "https://vanillajsacademy.com/api/photos.json";
-
+  const fetchPhotos = async () => {
     try {
-      const response = await fetch(API);
-      const photosData = await response.json();
+      const photosData = await getPhotos();
       setPhotos(photosData);
-    } catch (error){
+    } catch (error) {
       console.error('Error fetching photos:', error);
       setPhotos([]);
-    } 
+    }
   }
 
   useEffect(() => {
-    getPhotos();
+    fetchPhotos();
   }, [])
 
   if (!photos) {

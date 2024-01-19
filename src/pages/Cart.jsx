@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../contexts/CartContext'
+import { getPhotos } from '../utils/api'
 
 import { Stack } from "../components/layouts/Stack/Stack"
 import { Wrapper } from "../components/layouts/Wrapper/Wrapper"
@@ -11,31 +12,28 @@ import { Button } from '../components/ui/Button/Button'
 
 export const Cart = () => {
   const [photos, setPhotos] = useState([])
-  const [totalPrice, setTotalPrice] = useState("0")
+  const [totalPrice, setTotalPrice] = useState(0)
   const { getCartItem } = useContext(CartContext);
 
   const calcTotalPrice = () => {
     if (photos) {
-      const newTotalPrice = totalPrice + photos.price;
+      const newTotalPrice = parseInt((totalPrice + photos.price), 10);
       setTotalPrice(newTotalPrice);
     }
   }
 
-  const getPhotos = async () => {
-    const API = "https://vanillajsacademy.com/api/photos.json";
-
+  const fetchPhotos = async () => {
     try {
-      const response = await fetch(API);
-      const photosData = await response.json();
+      const photosData = await getPhotos();
       setPhotos(photosData);
-    } catch (error){
+    } catch (error) {
       console.error('Error fetching photos:', error);
       setPhotos([]);
-    } 
+    }
   }
 
   useEffect(() => {
-    getPhotos();
+    fetchPhotos();
     const cartItem = getCartItem();
     setPhotos(cartItem);
     calcTotalPrice()
@@ -89,7 +87,7 @@ export const Cart = () => {
           <span className='font-semibold mr-4 mb-4'>
             Total Price: ${totalPrice}
           </span>
-          <Button variant="ghost" className="mb-4">
+          <Button variant="ghost" className="mb-4" href="https://buy.stripe.com/test_00gfZydn3a71bFSfYY">
             Finish Checkout
           </Button>
         </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate, useParams} from "react-router-dom";
 import { CartContext } from "../contexts/CartContext"
+import { getSelectedPhoto } from "../utils/api";
 
 //Layouts
 import { Stack } from "../components/layouts/Stack/Stack"
@@ -18,34 +19,29 @@ export const Product = () => {
   const navigate = useNavigate();
   const cartContext = useContext(CartContext);
   const { addToCart } = cartContext;
-  
 
   const [photos, setPhotos] = useState([]);
 
-  const getPhotos = async () => {
-    const API = "https://vanillajsacademy.com/api/photos.json";
-
+  const fetchSelected = async () => {
     try {
-      const response = await fetch(API);
-      const photosData = await response.json();
-      const selectedPhoto = photosData.find((p) => p.id === id);
-      
-      if(selectedPhoto) {
-        setPhotos(selectedPhoto);
-      } else {
-        console.error("Photo not found");
-        setPhotos(null);
-      }
-    } catch (error){
+      const selectedPhotos = await getSelectedPhoto(id);
+      setPhotos(selectedPhotos);
+    } catch (error) {
       console.error('Error fetching photos:', error);
-      setPhotos(null);
-    } 
+      setPhotos([]);
+    }
   }
 
   useEffect(() => {
-    getPhotos();
+    fetchSelected();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
+
+  const handleCart = () => {
+    addToCart(photos.id);
+
+    console.log(photos.id);
+  }
 
   const handleBuy = () => {
     addToCart(photos.id);
@@ -72,7 +68,7 @@ export const Product = () => {
         <h2>{photos.name}</h2>
         <figure>
           <Stack>
-            <img className="rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]" src={photos.url} alt={photos.name} />
+            <img className="max-h-screen max-w-screen rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]" src={photos.url} alt={photos.name} />
             <figcaption>
               <p>{photos.description}</p>
             </figcaption>
@@ -88,7 +84,7 @@ export const Product = () => {
             </Button>
           </Link>
           <div className="flex items-center justify-between">
-            <Button>
+            <Button onClick={handleCart}>
               Add to Cart: ${photos.price}
             </Button>
             <Link to="/checkout">
