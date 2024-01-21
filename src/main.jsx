@@ -13,6 +13,8 @@ import { Product } from './pages/Product.jsx';
 import { Home } from './pages/Home.jsx';
 import { Cart } from './pages/Cart.jsx';
 import { SuccessPage } from './pages/SuccessPage.jsx';
+import { Login } from './pages/Login.jsx';
+import { Dashboard } from './pages/Dashboard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,14 @@ const router = createBrowserRouter([
   {
     path: "/success",
     element: <SuccessPage />
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />
   }
 ])
 
