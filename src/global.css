@@ -115,6 +115,28 @@
   }
 }
 
+@layer utilities {
+  .splitter {
+    > :last-child {
+      margin-top: get-size("500");
+    }
+
+    @include media-query("md") {
+      display: flex;
+
+      > * {
+        flex-grow: 1;
+      }
+
+      > :last-child {
+        margin-top: 0;
+        margin-left: get-size("500");
+        min-width: 22rem;
+      }
+    }
+  }
+}
+
 h1 {
   font-size: 2rem;
   font-weight: 700;
