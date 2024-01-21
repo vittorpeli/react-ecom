@@ -5,22 +5,23 @@
 }
 
 .sidebar > * {
+  margin: calc(var(--space) / 2);
   flex-grow: 1;
   flex-basis: var(--sideWidth);
 }
 
-.sidebar > :first-child {
-  flex-basis: 20rem;
-  flex-grow: 1;
+.noStretch > * {
+  align-items: flex-start;
 }
 
-.sidebar > :last-child {
-  min-width: 50%;
-}
-
-.right > :first-child,
-.right > :last-child {
+.left > *:last-child {
   flex-basis: 0;
   flex-grow: 999;
-  min-inline-size: var(--contentMin);
+  min-width: calc(var(--contentMin) - var(--s1));
+}
+
+.right > *:first-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-width: calc(var(--contentMin) - var(--s1));
 }
