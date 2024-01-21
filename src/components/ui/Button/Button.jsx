@@ -1,6 +1,6 @@
 import './Button.css';
 
-export const Button = ({ variant, className, children, onClick, href }) => {
+export const Button = ({ variant, className, children, onClick, href, type }) => {
 
   const getClassName = () => {
     let btnClass = `button ${className}`;
@@ -23,7 +23,7 @@ export const Button = ({ variant, className, children, onClick, href }) => {
       );
     }else {
       return (
-      <button className={getClassName()} onClick={onClick}>
+      <button type={type} className={getClassName()} onClick={onClick}>
         {children}
       </button>
       );
