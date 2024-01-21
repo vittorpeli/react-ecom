@@ -1,7 +1,7 @@
-import { photos } from "../photos.js";
+// import { photos } from "../utils/photos.js";
 
 function index (req, res) {
-  res.json(photos)
+  res.send({ message: 'Hello World'})
 }
 
 function show () {

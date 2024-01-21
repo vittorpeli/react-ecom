@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../contexts/CartContext'
 import { getPhotos } from '../utils/api'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
+import { checkout } from '../utils/checkout'
 
 import { Stack } from "../components/layouts/Stack/Stack"
 import { Wrapper } from "../components/layouts/Wrapper/Wrapper"
@@ -12,7 +13,7 @@ import { Button } from '../components/ui/Button/Button'
 
 
 export const Cart = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [photos, setPhotos] = useState([])
   const { getItemsInCart, removeFromCart, clearCart } = useContext(CartContext);
 
@@ -26,29 +27,15 @@ export const Cart = () => {
     }
   }
 
-  const checkout = async () => {
+  const handleCheckout = async () => {
     try {
-      const photosInCart = getItemsInCart(photos);
-      const cart = photosInCart.map((photo) => photo.id);
+      const photosInCart = await getItemsInCart(photos);
+      const success_url = 'http://localhost:8000/success';
+      const cancel_url = 'http://localhost:8000/cancel';
 
-      const stripeResponse = await fetch ("", {
-        method: 'POST',
-        headers: {
-          'Content-Type': "application/json"
-        },
-        body: JSON.stringify({
-          cart,
-          success_url: "/success",
-          cancel_url: "/checkout",
-        }),
-      });
-      const stripeSession = await stripeResponse.json();
-
-      clearCart();
-
-      window.location.href = stripeSession.url;
+      await checkout(photosInCart, success_url, cancel_url, clearCart);
     } catch (error) {
-      throw new Error;
+      console.error(error.message);
     }
   }
 
@@ -109,7 +96,7 @@ export const Cart = () => {
           <span className='font-semibold mr-4 mb-4'>
             Total Price: ${photosInCart.reduce((total, item) => total + item.price, 0)}
           </span>
-          <Button variant="ghost" className="mb-4" href="https://buy.stripe.com/test_00gfZydn3a71bFSfYY">
+          <Button variant="ghost" className="mb-4" onClick={() => handleCheckout()}>
             Finish Checkout
           </Button>
         </div>
