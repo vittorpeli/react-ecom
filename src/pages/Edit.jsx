@@ -11,6 +11,18 @@ export const Edit = () => {
   
   const [photos, setPhotos] = useState([]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPhotos((prevPhotos) => ({
+      ...prevPhotos,
+      [name]: value,
+    }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
+
   const fetchSelected = async () => {
     try {
       const selectedPhotos = await getSelectedPhoto(id);
@@ -52,16 +64,18 @@ export const Edit = () => {
           <form>
             <Stack>
               <label htmlFor="name">Name</label>
-              <input className='px-2' type="text" name='name' value={photos.name}/>
+              <input className='pl-2' type="text" name='name' value={photos.name} onChange={handleChange}/>
 
               <label htmlFor="desc">Desc</label>
-              <textarea className='px-2' type="text" name="desc" rows={4} cols={50} value={photos.description}/>
+              <textarea className='pl-2' type="text" name="desc" rows={4} cols={50} onChange={handleChange}>
+                {photos.description}
+              </textarea>
 
               <label htmlFor="price">Price</label>
-              <input className='px-2' type="number" name="price" value={photos.price}/>
+              <input className='pl-2' type="number" name="price" value={photos.price} onChange={handleChange}/>
 
               <Wrapper>
-                <Button type='submit'>Update Photo</Button>
+                <Button type='submit' onClick={handleSubmit}>Update Photo</Button>
               </Wrapper> 
             </Stack>
           </form>

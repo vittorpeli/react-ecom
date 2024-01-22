@@ -4,6 +4,11 @@ import { Button } from "./Button/Button"
 
 
 export const ProductForm = () => {
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
+
   return (
     <Wrapper>
       <form>
@@ -24,7 +29,7 @@ export const ProductForm = () => {
           <input type="number" name="price" />
 
           <Wrapper>
-            <Button type='submit'>Add Photo</Button>
+            <Button type='submit' onClick={handleSubmit}>Add Photo</Button>
           </Wrapper>
 
         </Stack>
