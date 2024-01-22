@@ -1,4 +1,5 @@
 @import "./reset.css";
+@tailwind components;
 @tailwind utilities;
 
 :root {
@@ -20,6 +21,28 @@
   --s3: calc(var(--s2) * var(--ratio));
   --s4: calc(var(--s3) * var(--ratio));
   --s5: calc(var(--s4) * var(--ratio));
+}
+
+@layer components {
+  .splitter > :last-child {
+    margin-top: 1.33rem;
+  }
+
+  @media (min-width: md) {
+    .splitter {
+      display: flex;
+    }
+
+    .splitter > * {
+      flex-grow: 1;
+    }
+
+    .splitter > :last-child {
+      margin-top: 0;
+      margin-left: 1.33rem;
+      min-width: 22rem;
+    }
+  }
 }
 
 h1 {
@@ -81,4 +104,8 @@ th {
 td {
   border-top: 1px solid #000;
   text-align: center;
+}
+
+a {
+  text-decoration: none;
 }

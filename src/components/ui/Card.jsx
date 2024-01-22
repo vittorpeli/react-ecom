@@ -4,11 +4,11 @@ import { Button } from "./Button/Button";
 
 import { Link } from "react-router-dom";
 
-export const Card = ({ url, desc, id, name }) => {
+export const Card = ({ url, desc, id, name}) => {
   return (
     <Box className="cursor-pointer hover:shadow-xl focus:shadow-xl">
       <div className="h-20">
-          <img className="object-cover h-full w-full rounded-t-lg" src={url} alt={desc} />
+          <img className="object-cover h-full w-full rounded-lg" src={url} alt={desc} />
       </div>
       <Stack className="py-2 px-3 flex-grow last:mt-auto [&>*:nth-last-child(2)]:mb-3">
         

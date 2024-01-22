@@ -53,18 +53,20 @@ export const Home = () => {
           <h3>Sparrow Photography</h3>
         </Wrapper>
 
-        <Grid>
-          {photos.map(photo => (
-            <Card 
-              key={photo.id}
-              url={photo.url}
-              desc={photo.description}
-              name={photo.name}
-              id={photo.id}
-            />
-          ))}
-        </Grid>
-
+        <section className="overflow-x-auto w-full min-w-96">
+          <Grid className="overflow-x-auto w-full min-w-96">
+            {photos.map(photo => (
+              <Card 
+                key={photo.id}
+                url={photo.url}
+                desc={photo.description}
+                name={photo.name}
+                id={photo.id}
+              />
+            ))}
+          </Grid>
+        </section>
+        
         <div>
           <Footer />  
         </div>
