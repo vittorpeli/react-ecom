@@ -21,9 +21,11 @@ export const ProductForm = () => {
           <textarea type="text" name="desc" rows={4} cols={50}/>
 
           <label htmlFor="price">Price</label>
-          <input type="text" name="price" />
+          <input type="number" name="price" />
 
-          <Button type='submit'>Add Product</Button>
+          <Wrapper>
+            <Button type='submit'>Add Photo</Button>
+          </Wrapper>
 
         </Stack>
       </form>

@@ -16,6 +16,7 @@ import { SuccessPage } from './pages/SuccessPage.jsx';
 import { Login } from './pages/Login.jsx';
 import { Dashboard } from './pages/Dashboard.jsx';
 import { Add } from './pages/Add.jsx';
+import { Edit } from './pages/Edit.jsx';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
   {
     path: "/add",
     element: <Add />
+  },
+  {
+    path: "/edit/:id",
+    element: <Edit />
   }
 ])
 
