@@ -47,9 +47,10 @@ export const Dashboard = () => {
           <Navbar />
         </div>
 
+        <h2 className="font-bold mr-2">Dashboard</h2>
+
         <Wrapper>
-          <div className="splitter flex items-end mt-10">
-            <h2 className="font-bold mr-2">Dashboard</h2>
+          <div className="flex items-center">
             <aside className="flex flex-wrap gap-2">
               <span className="mr-2">Click on a photo to edit, or</span>
               <Link to="/add">
