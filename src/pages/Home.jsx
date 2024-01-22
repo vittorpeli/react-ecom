@@ -62,6 +62,7 @@ export const Home = () => {
                 desc={photo.description}
                 name={photo.name}
                 id={photo.id}
+                btn="Learn More"
               />
             ))}
           </Grid>

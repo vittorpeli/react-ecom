@@ -4,7 +4,9 @@ import { Button } from "./Button/Button";
 
 import { Link } from "react-router-dom";
 
-export const Card = ({ url, desc, id, name}) => {
+export const Card = ({ url, desc, id, name, editMode = false, btn}) => {
+  const linkPath = editMode ? `/edit/${id}` : `/photo/${id}`;
+
   return (
     <Box className="cursor-pointer hover:shadow-xl focus:shadow-xl">
       <div className="h-20">
@@ -17,7 +19,7 @@ export const Card = ({ url, desc, id, name}) => {
           <h2>
             <a 
               className="focus:underline" 
-              href={`/photo/${id}`}
+              href={linkPath}
             >
               {name}
             </a>
@@ -27,9 +29,9 @@ export const Card = ({ url, desc, id, name}) => {
         </div>
 
         {/* <div> */}
-        <Link to={`/photo/${id}`}>
+        <Link to={linkPath}>
           <Button variant="ghost">   
-            Learn More
+            {btn}
           </Button>
         </Link>
         {/* </div> */}

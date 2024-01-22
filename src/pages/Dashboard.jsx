@@ -68,6 +68,8 @@ export const Dashboard = () => {
                 desc={photo.description}
                 name={photo.name}
                 id={photo.id}
+                editMode={true}
+                btn="Edit"
               />
             ))}
         </Grid>
