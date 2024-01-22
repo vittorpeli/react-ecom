@@ -52,13 +52,13 @@ export const Edit = () => {
           <form>
             <Stack>
               <label htmlFor="name">Name</label>
-              <input type="text" name='name' value={photos.name}/>
+              <input className='px-2' type="text" name='name' value={photos.name}/>
 
               <label htmlFor="desc">Desc</label>
-              <textarea type="text" name="desc" rows={4} cols={50}/>
+              <textarea className='px-2' type="text" name="desc" rows={4} cols={50} value={photos.description}/>
 
               <label htmlFor="price">Price</label>
-              <input type="number" name="price" />
+              <input className='px-2' type="number" name="price" value={photos.price}/>
 
               <Wrapper>
                 <Button type='submit'>Update Photo</Button>
