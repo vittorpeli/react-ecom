@@ -15,6 +15,7 @@ import { Cart } from './pages/Cart.jsx';
 import { SuccessPage } from './pages/SuccessPage.jsx';
 import { Login } from './pages/Login.jsx';
 import { Dashboard } from './pages/Dashboard.jsx';
+import { Add } from './pages/Add.jsx';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />
+  },
+  {
+    path: "/add",
+    element: <Add />
   }
 ])
 

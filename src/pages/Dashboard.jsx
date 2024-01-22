@@ -9,6 +9,7 @@ import { Wrapper } from "../components/layouts/Wrapper/Wrapper"
 import { Button } from "../components/ui/Button/Button"
 import { Navbar } from "../components/ui/Navbar"
 import { Card } from "../components/ui/Card"
+import { Link } from "react-router-dom";
 
 export const Dashboard = () => {
   const [photos, setPhotos] = useState([]);
@@ -51,7 +52,9 @@ export const Dashboard = () => {
             <h2 className="font-bold mr-2">Dashboard</h2>
             <aside className="flex flex-wrap gap-2">
               <span className="mr-2">Click on a photo to edit, or</span>
-              <Button variant="ghost">Add a New One</Button>
+              <Link to="/add">
+                <Button variant="ghost">Add a New One</Button>
+              </Link>
             </aside>
           </div>
         </Wrapper>
