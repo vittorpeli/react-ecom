@@ -44,7 +44,7 @@ export const Dashboard = () => {
       <Stack>
 
         <div>
-          <Navbar />
+          <Navbar owner={true}/>
         </div>
 
         <h2 className="font-bold mr-2">Dashboard</h2>

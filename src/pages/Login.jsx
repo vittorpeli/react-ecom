@@ -11,7 +11,7 @@ export const Login = () => {
       <Stack>
 
         <div>
-          <Navbar />
+          <Navbar owner={true}/>
         </div>
 
         <Center>

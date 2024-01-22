@@ -11,7 +11,7 @@ export const Add = () => {
       <Stack>
 
         <div>
-          <Navbar />
+          <Navbar owner={true}/>
         </div>
 
         <Center>

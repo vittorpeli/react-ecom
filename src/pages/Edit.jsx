@@ -50,7 +50,7 @@ export const Edit = () => {
     <Wrapper className="mb-4">
       <Stack>
         <div>
-          <Navbar/>
+          <Navbar owner={true}/>
         </div>
 
         <h2>{photos.name}</h2>

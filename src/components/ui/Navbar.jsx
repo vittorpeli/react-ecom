@@ -7,7 +7,7 @@ import { Anchor, ShoppingCart } from "@phosphor-icons/react"
 import { Button } from "./Button/Button"
 import { CartContext } from "../../contexts/CartContext" 
 
-export const Navbar = () => {
+export const Navbar = ({ owner = false}) => {
   const { getCartItem } = useContext(CartContext);
   const cartCount = getCartItem().length;
 
@@ -15,11 +15,17 @@ export const Navbar = () => {
     <Wrapper>
       <nav className="flex mt-4 py-4 px-0 items-center justify-between">
         <Link to="/" className="hover:underline focus:underline text-2xl"><Anchor size={36} color="#3b82f6"/></Link>
-        <Link to="/checkout">
-          <Button variant="link">
-            <ShoppingCart size={24}/> <span>({cartCount})</span>
-          </Button>
-        </Link>
+        { 
+          owner ? 
+          "" 
+          : 
+          <Link to="/checkout">
+            <Button variant="link">
+              <ShoppingCart size={24}/> <span>({cartCount})</span>
+            </Button>
+          </Link>
+        }
+        
       </nav>
     </Wrapper>
   )
