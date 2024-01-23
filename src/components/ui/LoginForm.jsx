@@ -1,6 +1,7 @@
 import { Stack } from "../layouts/Stack/Stack"
 import { Wrapper } from "../layouts/Wrapper/Wrapper"
 import { Button } from "./Button/Button"
+import { FormInput } from "./FormInput"
 
 
 export const LoginForm = () => {
@@ -8,11 +9,17 @@ export const LoginForm = () => {
       <Wrapper>
         <form>
           <Stack>
-            <label htmlFor="username">Username</label>
-            <input type="text" name="username" id="username"/>
+            <FormInput 
+              type="text"
+              name="Username"
+              placeholder="Name"
+            />
 
-            <label htmlFor="password">Password</label>
-            <input type="text" name="password" id="password"/>
+            <FormInput 
+              type="text"
+              name="Password"
+              placeholder="Password"
+            />
 
             <Button type='submit'>Login</Button>
 

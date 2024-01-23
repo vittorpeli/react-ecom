@@ -1,6 +1,7 @@
 import { Stack } from "../layouts/Stack/Stack"
 import { Wrapper } from "../layouts/Wrapper/Wrapper"
 import { Button } from "./Button/Button"
+import { FormInput } from "./FormInput"
 
 
 export const ProductForm = () => {
@@ -13,25 +14,34 @@ export const ProductForm = () => {
     <Wrapper>
       <form>
         <Stack>
-          <label htmlFor="name">Name</label>
-          <input type="text" name="name"/>
+          <FormInput 
+            type="text"
+            name="Name"
+            placeholder="Name"
+          />
 
-          <label htmlFor="url">Photo URL</label>
-          <input type="text" name="url" />
+          <FormInput 
+            type="text"
+            name="Photo URL"
+            placeholder="URL"
+          />
 
-          <label htmlFor="id">Photo ID</label>
-          <input type="text" name="id"/>
+          <FormInput 
+            type="text"
+            name="Photo ID"
+            placeholder="ID"
+          />
 
-          <label htmlFor="desc">Description</label>
-          <textarea type="text" name="desc" rows={4} cols={50}/>
+          <label htmlFor="desc" className="font-semibold">Description</label>
+          <textarea type="text" name="desc" rows={4} cols={50} className="w-full p-2.5 rounded outline-none border-none shadow-lg focus:border-solid focus:border-2 focus:border-blue-400"/>
 
-          <label htmlFor="price">Price</label>
-          <input type="number" name="price" />
-
-          <Wrapper>
-            <Button type='submit' onClick={handleSubmit}>Add Photo</Button>
-          </Wrapper>
-
+          <FormInput 
+            type="number"
+            name="Price"
+          />
+          
+          <Button type='submit' onClick={handleSubmit}>Add Photo</Button>
+          
         </Stack>
       </form>
     </Wrapper>
