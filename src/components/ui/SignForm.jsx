@@ -5,7 +5,9 @@ import { Button } from "./Button/Button"
 import { FormInput } from "./FormInput"
 
 import PropTypes from 'prop-types'
+
 import useErrors from '../../hooks/useErrors'
+import isValidEmail from '../../utils/isValidEmail';
 
 export const SignForm = ({ error }) => {
   const [name, setName] = useState('')
@@ -17,7 +19,7 @@ export const SignForm = ({ error }) => {
   const handleNameChange = e => {
     setName(e.target.value);
 
-    if (!e.target.value) {
+    if (!e.target.value && isValidEmail(e.target.value)) {
       setError({ field: 'name', message: 'Name is required' })
     } else {
       removeError('name')
