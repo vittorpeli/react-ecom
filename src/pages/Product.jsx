@@ -1,7 +1,8 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import { Link, useNavigate, useParams} from "react-router-dom";
 import { CartContext } from "../contexts/CartContext"
-import { getSelectedPhoto } from "../utils/api";
+import { useSelected } from "../hooks/useSelected";
+// import { getSelectedPhoto } from "../utils/api";
 
 //Layouts
 import { Stack } from "../components/layouts/Stack/Stack"
@@ -19,40 +20,41 @@ export const Product = () => {
   const navigate = useNavigate();
   const { addToCart, inCart } = useContext(CartContext);
 
-  const [photos, setPhotos] = useState([]);
+  const selectedPhoto = useSelected(id);
 
-  const fetchSelected = async () => {
-    try {
-      const selectedPhotos = await getSelectedPhoto(id);
-      setPhotos(selectedPhotos);
-    } catch (error) {
-      console.error('Error fetching photos:', error);
-      setPhotos([]);
-    }
-  }
+  // const fetchSelected = async () => {
+  //   try {
+  //     const selectedPhotos = await getSelectedPhoto(id);
+  //     setPhotos(selectedPhotos);
+  //   } catch (error) {
+  //     console.error('Error fetching photos:', error);
+  //     setPhotos([]);
+  //   }
+  // }
 
-  useEffect(() => {
-    fetchSelected();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  // useEffect(() => {
+  //   fetchSelected();
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [id]);
 
   const handleCart = () => {
-    addToCart(photos.id);
+    addToCart(selectedPhoto.id);
 
-    console.log(photos.id);
+    console.log(selectedPhoto.id);
   }
 
   const handleBuy = () => {
-    addToCart(photos.id);
-
-    navigate("/checkout");
+    if (selectedPhoto) {
+      addToCart(selectedPhoto.id);
+      navigate("/checkout");
+    }
   }
 
-  if (!photos) {
+  if (!selectedPhoto) {
     return <div>Loading...</div>;
   }
 
-  if (photos.length === 0) {
+  if (selectedPhoto.length === 0) {
     return <div>Error: There was a problem fetching the photos.</div>;
   }
 
@@ -64,12 +66,12 @@ export const Product = () => {
         </div>
 
         {/* Content */}
-        <h2>{photos.name}</h2>
+        <h2>{selectedPhoto.name}</h2>
         <figure>
           <Stack>
-            <img className="max-h-screen max-w-screen rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]" src={photos.url} alt={photos.name} />
+            <img className="max-h-screen max-w-screen rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]" src={selectedPhoto.url} alt={selectedPhoto.name} />
             <figcaption>
-              <p>{photos.description}</p>
+              <p>{selectedPhoto.description}</p>
             </figcaption>
           </Stack>
         </figure>
@@ -83,13 +85,13 @@ export const Product = () => {
             </Button>
           </Link>
           <div className="flex items-center justify-between">
-            {inCart(photos.id) ? (
+            {inCart(selectedPhoto.id) ? (
                 <Link to="/checkout">
-                  <span>{`"${photos.name}"`} added to cart</span>
+                  <span>{`"${selectedPhoto.name}"`} added to cart</span>
                 </Link>
               ) : (
                 <Button onClick={handleCart}>
-                  Add to Cart: ${photos.price}
+                  Add to Cart: ${selectedPhoto.price}
                 </Button>
             )}
             <Link to="/checkout">

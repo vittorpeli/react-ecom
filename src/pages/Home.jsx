@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { useStorage } from "../hooks/useStorage";
+import { API } from "../utils/api";
 
 // Layouts
 import { Wrapper } from "../components/layouts/Wrapper/Wrapper";
@@ -13,11 +14,9 @@ import { Card } from "../components/ui/Card";
 import { Navbar } from "../components/ui/Navbar";
 import { Footer } from "../components/ui/Footer";
 
-const url = "https://vanillajsacademy.com/api/photos.json"
-
 export const Home = () => {
   const [photos, setPhotos] = useState([]);
-  const { data: fetchedPhotos, error, loading } = useFetch(url);
+  const { data: fetchedPhotos, error, loading } = useFetch(API);
   const [storedPhotos, setStoredPhotos] = useStorage('sparrow-photography');
 
   useEffect(() => {
@@ -56,7 +55,7 @@ export const Home = () => {
 
         <section className="overflow-x-auto w-full min-w-96">
           <Grid className="overflow-x-auto w-full min-w-96">
-            {photos.map(photo => (
+            {Array.isArray(photos) && photos.map(photo => (
               <Card 
                 key={photo.id}
                 url={photo.url}

@@ -31,9 +31,11 @@ export const CartProvider = ({ children }) => {
   }
 
   const getItemsInCart = (items) => {
-    return items.filter((item) => {
-      return inCart(item.id);
-    });
+    if (Array.isArray(items)) {
+      return items.filter((item) => {
+        return inCart(item.id);
+      });
+    }
   }
 
   const clearCart = () => {

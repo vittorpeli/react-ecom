@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../contexts/CartContext'
-import { getPhotos } from '../utils/api'
+import { API } from '../utils/api'
 // import { useNavigate } from 'react-router-dom'
 import { checkout } from '../utils/checkout'
 
@@ -10,22 +10,15 @@ import { Navbar } from "../components/ui/Navbar"
 import { Table } from "../components/ui/Table"
 import { TableHead } from '../components/ui/TableHead'
 import { Button } from '../components/ui/Button/Button'
-
+import { useFetch } from '../hooks/useFetch'
+import { useStorage } from '../hooks/useStorage'
 
 export const Cart = () => {
   // const navigate = useNavigate();
   const [photos, setPhotos] = useState([])
   const { getItemsInCart, removeFromCart, clearCart } = useContext(CartContext);
-
-  const fetchPhotos = async () => {
-    try {
-      const photosData = await getPhotos();
-      setPhotos(photosData);
-    } catch (error) {
-      console.error('Error fetching photos:', error);
-      setPhotos([]);
-    }
-  }
+  const { data: fetchedPhotos, error} = useFetch(API);
+  const [storedPhotos, setStoredPhotos] = useStorage('sparrow-photography');
 
   const handleCheckout = async () => {
     try {
@@ -40,8 +33,18 @@ export const Cart = () => {
   }
 
   useEffect(() => {
-    fetchPhotos();
-  }, [])
+    if (fetchedPhotos) {
+      setPhotos(fetchedPhotos);
+      setStoredPhotos(fetchedPhotos);
+    } else if (error) {
+      console.error("Error fetching photos:", error);
+      setPhotos([]);
+    } else if (storedPhotos) {
+      setPhotos(storedPhotos);
+    } else {
+      return;
+    }
+  }, [fetchedPhotos, error, storedPhotos, setStoredPhotos])
 
   const handleDelete = (id) => {
     removeFromCart(id);
@@ -75,7 +78,7 @@ export const Cart = () => {
         <Wrapper>
           <TableHead>
             <tbody>
-              {photosInCart.map((item) => (
+              {Array.isArray(photosInCart) && photosInCart.map((item) => (
                 <Table
                   key={item.id}
                   img={item.url}

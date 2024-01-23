@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
-import { getPhotos } from "../utils/api"
-import '../global.css';
+import { API } from "../utils/api"
+import { useFetch } from "../hooks/useFetch";
+import { useStorage } from "../hooks/useStorage";
+// import '../global.css';
 
 import { Grid } from "../components/layouts/Grid/Grid"
 import { Stack } from "../components/layouts/Stack/Stack"
@@ -13,25 +15,24 @@ import { Link } from "react-router-dom";
 
 export const Dashboard = () => {
   const [photos, setPhotos] = useState([]);
-
-  const fetchPhotos = async () => {
-    try {
-      console.log('Before fetching photos...');
-      const photosData = await getPhotos();
-      console.log('After fetching photos:', photosData);
-      setPhotos(photosData);
-    } catch (error) {
-      console.error('Error fetching photos:', error);
-      setPhotos([]);
-    }
-  }
+  const { data: fetchedPhotos, error, loading } = useFetch(API);
+  const [storedPhotos, setStoredPhotos] = useStorage('sparrow-photography');
 
   useEffect(() => {
-    console.log("Fethcing photos...");
-    fetchPhotos();
-  }, [])
+    if (fetchedPhotos) {
+      setPhotos(fetchedPhotos);
+      setStoredPhotos(fetchedPhotos);
+    } else if (error) {
+      console.error("Error fetching photos:", error);
+      setPhotos([]);
+    } else if (storedPhotos) {
+      setPhotos(storedPhotos);
+    } else {
+      return;
+    }
+  }, [fetchedPhotos, error, storedPhotos, setStoredPhotos])
 
-  if (!photos) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
@@ -61,7 +62,7 @@ export const Dashboard = () => {
         </Wrapper>
 
         <Grid>
-          {photos.map(photo => (
+          {Array.isArray(photos) && photos.map(photo => (
               <Card
                 key={photo.id}
                 url={photo.url}
