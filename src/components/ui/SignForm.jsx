@@ -3,10 +3,9 @@ import { Wrapper } from "../layouts/Wrapper/Wrapper"
 import { Button } from "./Button/Button"
 import { FormInput } from "./FormInput"
 
-
-export const LoginForm = () => {
+export const SignForm = () => {
   return (
-      <Wrapper>
+    <Wrapper>
         <form>
           <Stack>
             <FormInput 
@@ -16,13 +15,18 @@ export const LoginForm = () => {
             />
 
             <FormInput 
+              type="email"
+              name="Email"
+              placeholder="Email Address"
+            />
+
+            <FormInput 
               type="text"
               name="Password"
               placeholder="Password"
             />
 
-            <Button type='submit'>Login</Button>
-            <Button variant="link" type='button' href="/signup">Sign Up</Button>
+            <Button type='submit'>Sign Up</Button>
           </Stack>
         </form>
       </Wrapper>
