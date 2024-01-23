@@ -1,6 +1,7 @@
 //  React
 import { useEffect, useState } from "react";
-import { getPhotos } from "../utils/api";
+import { useFetch } from "../hooks/useFetch";
+import { useStorage } from "../hooks/useStorage";
 
 // Layouts
 import { Wrapper } from "../components/layouts/Wrapper/Wrapper";
@@ -12,28 +13,28 @@ import { Card } from "../components/ui/Card";
 import { Navbar } from "../components/ui/Navbar";
 import { Footer } from "../components/ui/Footer";
 
+const url = "https://vanillajsacademy.com/api/photos.json"
+
 export const Home = () => {
   const [photos, setPhotos] = useState([]);
-  // const [loading, setLoading] = useState(true);
-
-  const fetchPhotos = async () => {
-    try {
-      console.log('Before fetching photos...');
-      const photosData = await getPhotos();
-      console.log('After fetching photos:', photosData);
-      setPhotos(photosData);
-    } catch (error) {
-      console.error('Error fetching photos:', error);
-      setPhotos([]);
-    }
-  }
+  const { data: fetchedPhotos, error, loading } = useFetch(url);
+  const [storedPhotos, setStoredPhotos] = useStorage('sparrow-photography');
 
   useEffect(() => {
-    console.log("Fethcing photos...");
-    fetchPhotos();
-  }, [])
+    if (fetchedPhotos) {
+      setPhotos(fetchedPhotos);
+      setStoredPhotos(fetchedPhotos);
+    } else if (error) {
+      console.error("Error fetching photos:", error);
+      setPhotos([]);
+    } else if (storedPhotos) {
+      setPhotos(storedPhotos);
+    } else {
+      return;
+    }
+  }, [fetchedPhotos, error, storedPhotos, setStoredPhotos])
 
-  if (!photos) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
