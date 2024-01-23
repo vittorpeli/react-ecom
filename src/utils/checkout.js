@@ -1,10 +1,10 @@
-const stripeURL = 'http://localhost:3001/api'
+const stripeURL = 'http://localhost:3001/api/create-checkout-session'
 
 export const checkout = async (photos, success_url, cancel_url, remove) => {
   try {
     let cart = photos.map((photo) => photo.id);
 
-    let sessionRequest = await fetch (stripeURL + "/create-checkout-session", {
+    let sessionRequest = await fetch (stripeURL, {
       method: 'POST',
       headers: {
         'Content-Type': "application/json"
