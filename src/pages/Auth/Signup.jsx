@@ -18,7 +18,8 @@ export const Signup = () => {
           <Stack>
             <h1>Sign Up</h1>
             <Box>  
-              <SignForm />
+              <SignForm
+              />
             </Box>
           </Stack>
         </Center>
