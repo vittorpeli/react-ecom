@@ -12,9 +12,9 @@
   background-color: var(--color-light);
 }
 
-/* .box *:not(.button) {
+.box *:not(.button) {
   color: inherit;
-} */
+}
 
 .box.invert {
   color: var(--color-light);

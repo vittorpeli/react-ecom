@@ -22,21 +22,6 @@ export const Product = () => {
 
   const selectedPhoto = useSelected(id);
 
-  // const fetchSelected = async () => {
-  //   try {
-  //     const selectedPhotos = await getSelectedPhoto(id);
-  //     setPhotos(selectedPhotos);
-  //   } catch (error) {
-  //     console.error('Error fetching photos:', error);
-  //     setPhotos([]);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   fetchSelected();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [id]);
-
   const handleCart = () => {
     addToCart(selectedPhoto.id);
 

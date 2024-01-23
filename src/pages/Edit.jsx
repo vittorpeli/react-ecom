@@ -1,49 +1,45 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom"
-import { getSelectedPhoto } from '../utils/api';
+// import { getSelectedPhoto } from '../utils/api';
 import { Wrapper } from '../components/layouts/Wrapper/Wrapper';
 import { Stack } from '../components/layouts/Stack/Stack';
 import { Navbar } from '../components/ui/Navbar';
 import { Button } from '../components/ui/Button/Button';
+import { useSelected } from '../hooks/useSelected';
 
 export const Edit = () => {
   const { id } = useParams();
+
+  const selectedPhoto = useSelected(id);
   
   const [photos, setPhotos] = useState([]);
+  const [selectedPhotoData, setSelectedPhotoData] = useState({
+    name: "",
+    description: "",
+    price: 0,
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPhotos((prevPhotos) => ({
-      ...prevPhotos,
-      [name]: value,
-    }))
+    setSelectedPhotoData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
   }
 
-  const fetchSelected = async () => {
-    try {
-      const selectedPhotos = await getSelectedPhoto(id);
-      setPhotos(selectedPhotos);
-    } catch (error) {
-      console.error('Error fetching photos:', error);
-      setPhotos([]);
-    }
-  }
-
   useEffect(() => {
-    fetchSelected();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+    if (selectedPhoto) {
+      setPhotos([selectedPhoto]);
+      setSelectedPhotoData(selectedPhoto);
+    }
+  }, [selectedPhoto]);
 
-  if (!photos) {
+  if (!photos && photos.length === 0) {
     return <div>Loading...</div>;
-  }
-
-  if (photos.length === 0) {
-    return <div>Error: There was a problem fetching the photos.</div>;
   }
 
   return (
@@ -56,7 +52,7 @@ export const Edit = () => {
         <h2>{photos.name}</h2>
         <figure>
           <Stack>
-            <img className="max-h-screen max-w-screen rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]" src={photos.url} alt={photos.name} />
+            <img className="max-h-screen max-w-screen rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]" src={selectedPhotoData.url} alt={selectedPhotoData.name} />
           </Stack>
         </figure>
 
@@ -64,15 +60,15 @@ export const Edit = () => {
           <form>
             <Stack>
               <label htmlFor="name">Name</label>
-              <input className='pl-2' type="text" name='name' value={photos.name} onChange={handleChange}/>
+              <input className='pl-2' type="text" name='name' value={selectedPhotoData.name} onChange={handleChange}/>
 
               <label htmlFor="desc">Desc</label>
               <textarea className='pl-2' type="text" name="desc" rows={4} cols={50} onChange={handleChange}>
-                {photos.description}
+                {selectedPhotoData.description}
               </textarea>
 
               <label htmlFor="price">Price</label>
-              <input className='pl-2' type="number" name="price" value={photos.price} onChange={handleChange}/>
+              <input className='pl-2' type="number" name="price" value={selectedPhotoData.price} onChange={handleChange}/>
 
               <Wrapper>
                 <Button type='submit' onClick={handleSubmit}>Update Photo</Button>

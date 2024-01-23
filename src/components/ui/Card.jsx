@@ -17,12 +17,12 @@ export const Card = ({ url, desc, id, name, editMode = false, btn}) => {
         
         <div className="flex flex-col flex-grow last:mt-auto [&>*:nth-last-child(2)]:mb-3">
           <h2>
-            <a 
+            <a
               className="focus:underline" 
               href={linkPath}
             >
               {name}
-            </a>
+            </a> 
           </h2>
           <p>{desc}</p>
           <span>By Jack Sparrow</span>
