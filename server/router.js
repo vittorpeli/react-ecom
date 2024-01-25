@@ -10,6 +10,6 @@ router.delete("/photos/:id", PhotosController.del)
 router.post("/photos", PhotosController.store)
 router.put("/photos/:id", PhotosController.update)
 
-router.post("/create-checkout-session", StripeController.createCheckoutSession)
+router.post("/session", StripeController.createSession)
 
 export default router;

@@ -53,11 +53,11 @@ export async function findByName(name) {
   return selectedPhoto;
 }
 
-export async function create({ ID, name, url, description, price }) {
+export async function create({ id, name, url, description, price }) {
   const photos = await getPhotos();
 
   const newPhoto = {
-    ID, name, url, description, price
+    id, name, url, description, price
   }
 
   photos.push(newPhoto);

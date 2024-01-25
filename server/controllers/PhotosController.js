@@ -19,7 +19,7 @@ async function show (req, res) {
 }
 
 async function store (req, res) {
-  const { ID, name, url, description, price } = req.body;
+  const { id, name, url, description, price } = req.body;
 
   if (!name) {
     return res.status(400).json("Photo's name is required!");
@@ -40,7 +40,7 @@ async function store (req, res) {
   }
 
   const photo = await create({
-    ID, name, url, description, price
+    id, name, url, description, price
   })
 
   res.json(photo);
@@ -53,10 +53,6 @@ async function update(req, res) {
   const photoExists = await getSelectedPhoto(id);
   if(!photoExists) {
     return res.status(404).json("Photo not found!");
-  }
-
-  if (!name) {
-    return res.status(400).json("Photo's name is required!");
   }
 
   const photoByName = await findByName(name);

@@ -1,16 +1,18 @@
 /* eslint-disable no-useless-catch */
 import Stripe from "stripe";
-import { stripeKey } from "../config.js";
+import "dotenv/config";
+import { getPhotos } from "../repositories/PhotosRepository";
 
-const stripe = new Stripe(stripeKey, {
+console.log("Key:", process.env.STRIPE_SECRET_KEY);
+
+const stripe = new Stripe(String(process.env.STRIPE_SECRET_KEY), {
   apiVersion: "2023-10-16",
 })
 
-async function createCheckoutSession (req, res) {
-  const { cart, success_url, cancel_url } = req.body;
-
+async function createSession (req, res) {
   try {
-    const photos = await getPhotosFromDatabase();
+    const { cart } = req.body;
+    const photos = await getPhotos();
 
     const lineItems = photos
       .filter((photo) => cart.includes(photo.id))
@@ -25,32 +27,23 @@ async function createCheckoutSession (req, res) {
           unit_amount: item.price * 100,
         },
         quantity: 1,
-      }));
+      }))
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
       line_items: lineItems,
-      success_url,
-      cancel_url,
+      success_url: "http://localhost:5173/success",
+      cancel_url: "http://localhost:5173/checkout",
+    },
+    {
+      apiKey: process.env.STRIPE_SECRET_KEY,
     });
 
-    res.json({sessionId: session.id});
+    res.status(201).json({ sessionId: session.id });
   } catch (error) {
-    console.error("Error creating checkout session:", error);
-    res.status(500).json({ error: "Unable to create checkout session"});
+    res.status(500).json({ error });
   }
 }
 
-async function getPhotosFromDatabase () {
-  const API = "https://vanillajsacademy.com/api/photos.json";
-
-  try {
-    const response = await fetch(API);
-    const photosData = await response.json();
-    return photosData;
-  } catch (error){
-    throw error;
-  } 
-}
-
-export default { createCheckoutSession };
+export default { createSession };
