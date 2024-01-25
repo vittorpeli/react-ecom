@@ -71,12 +71,6 @@ async function update(req, res) {
 async function del (req, res) {
   const { id } = req.params;
 
-  const photo = await getSelectedPhoto(id);
-
-  if (!photo) {
-    return res.status(404).send("Photo not found!");
-  }
-
   await destroy(id);
 
   res.sendStatus(204);

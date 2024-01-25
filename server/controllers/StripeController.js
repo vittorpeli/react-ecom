@@ -1,9 +1,7 @@
 /* eslint-disable no-useless-catch */
 import Stripe from "stripe";
 import "dotenv/config";
-import { getPhotos } from "../repositories/PhotosRepository";
-
-console.log("Key:", process.env.STRIPE_SECRET_KEY);
+import { getPhotos } from "../repositories/PhotosRepository.js";
 
 const stripe = new Stripe(String(process.env.STRIPE_SECRET_KEY), {
   apiVersion: "2023-10-16",

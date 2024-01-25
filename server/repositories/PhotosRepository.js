@@ -1,49 +1,15 @@
-/* eslint-disable no-useless-catch */
+import db from "../db/index.js";
+// import { fetchPhotos } from "../services/photoAPI.js";
 
-// let photos = [
-//   {
-//     id: 'boat-at-midnight',
-//     name: 'Boat at Midnight',
-//     url: 'https://unsplash.com',
-//     description: 'A boat at midnight',
-//     price: 23,
-//   }
-// ];
-
-export async function getPhotos() {
-
-  const API = "https://vanillajsacademy.com/api/photos.json";
-
-  try {
-    const response = await fetch(API);
-    const photosData = await response.json();
-    return photosData;
-  } catch (error){
-    throw error;
-  } 
+export async function getPhotos(orderBy = 'ASC') {
+  const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+  const rows = await db.query(`SELECT * FROM photos ORDER BY name ${direction}`);
+  return rows;
 }
 
 export async function getSelectedPhoto(id) {
-  try {
-    const photosData = await getPhotos();
-    const selectedPhoto = photosData.find((p) => p.id === id);
-
-    if(selectedPhoto) {
-      return selectedPhoto;
-    }else {
-      console.error("Photo not found");
-      return null;
-    } 
-  } catch (error) {
-    throw error;
-  }
-}
-
-export async function destroy(id) {
-  const photos = await getPhotos();
-  const filteredPhoto = photos.filter((p) => p.id !== id);
-
-  return filteredPhoto;
+  const row = await db.query(`SELECT * FROM photos WHERE id = $1`, [id]);
+  return row;
 }
 
 export async function findByName(name) {
@@ -54,25 +20,27 @@ export async function findByName(name) {
 }
 
 export async function create({ id, name, url, description, price }) {
-  const photos = await getPhotos();
+  const [row] = await db.query(`
+  INSERT INTO photos(id, name, url, description, price) 
+  VALUES($1, $2, $3, $4, $5)
+  RETURNING *
+  `,[id, name, url, description, price]);
 
-  const newPhoto = {
-    id, name, url, description, price
-  }
-
-  photos.push(newPhoto);
-
-  return newPhoto;
+  return row;
 }
 
 export async function postUpdate({ ID, name, url, description, price}) {
-  const photos = await getPhotos();
+  const row = await db.query(`
+  UPDATE photos
+  SET name = $2, url = $3, description = $4, price = $5
+  WHERE id = $1
+  RETURNING *
+  `, [ID, name, url, description, price]);
 
-  const updatedPhoto = {
-    ID, name, url, description, price
-  };
+  return row;
+}
 
-  photos.map((p) => p.id === ID ? updatedPhoto : p);
-
-  return updatedPhoto;
+export async function destroy(id) {
+  const deleteOp = await db.query('DELETE FROM photos WHERE id = $1', [id]);
+  return deleteOp;
 }
