@@ -12,11 +12,22 @@ import { Button } from "../components/ui/Button/Button"
 import { Navbar } from "../components/ui/Navbar"
 import { Card } from "../components/ui/Card"
 import { Link } from "react-router-dom";
+import { Search } from "../components/ui/Search";
 
 export const Dashboard = () => {
   const [photos, setPhotos] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const { data: fetchedPhotos, error, loading } = useFetch(API);
   const [storedPhotos, setStoredPhotos] = useStorage('sparrow-photography');
+
+  const filteredPhotos = photos.filter(photo => (
+    photo.name.includes(searchTerm)
+  ))
+
+  function handleSearch(e) {
+    setSearchTerm(e.target.value);
+  }
 
   useEffect(() => {
     if (fetchedPhotos) {
@@ -50,6 +61,9 @@ export const Dashboard = () => {
 
         <h2 className="font-bold mr-2">Dashboard</h2>
 
+        
+        <Search value={searchTerm} onChange={handleSearch}/>
+
         <Wrapper>
           <div className="flex items-center">
             <aside className="flex flex-wrap gap-2">
@@ -62,7 +76,7 @@ export const Dashboard = () => {
         </Wrapper>
 
         <Grid>
-          {Array.isArray(photos) && photos.map(photo => (
+          {Array.isArray(filteredPhotos) && filteredPhotos.map(photo => (
               <Card
                 key={photo.id}
                 url={photo.url}
