@@ -1,10 +1,23 @@
-import { getPhotos, getSelectedPhoto, destroy, findByName, create, postUpdate } from "../repositories/PhotosRepository.js";
+import { getPhotos, getSelectedPhoto, destroy, findByName, create, postUpdate} from "../repositories/PhotosRepository.js";
 
 async function index (req, res) {
   const photos = await getPhotos();
 
   res.json(photos);
 }
+
+// async function indexAndSync(req, res) {
+//   try {
+//     await syncPhotosWithApi();
+
+//     const photosFromDb = await getPhotos();
+
+//     res.json({ photosFromDb });
+//   } catch (error) {
+//     console.error("Error in indexAndSync", error);
+//     res.status(500).json({ error: "Internal Server Error"});
+//   }
+// }
 
 async function show (req, res) {
   const { id } = req.params;
@@ -77,4 +90,4 @@ async function del (req, res) {
 
 }
 
-export default {index, show, store, update, del}
+export default {index , show, store, update, del };
