@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { API } from "../utils/api"
 import { useFetch } from "../hooks/useFetch";
 import { useStorage } from "../hooks/useStorage";
@@ -17,13 +17,12 @@ import { Search } from "../components/ui/Search";
 export const Dashboard = () => {
   const [photos, setPhotos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const { data: fetchedPhotos, error, loading } = useFetch(API);
+  const { data: fetchedPhotos, error } = useFetch(API);
   const [storedPhotos, setStoredPhotos] = useStorage('sparrow-photography');
 
-  const filteredPhotos = photos.filter(photo => (
-    photo.name.includes(searchTerm)
-  ))
+  const filteredPhotos = useMemo(() => Array.isArray(photos)
+  ? photos.filter(photo => photo.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  : [], [photos, searchTerm]);
 
   function handleSearch(e) {
     setSearchTerm(e.target.value);
@@ -43,16 +42,12 @@ export const Dashboard = () => {
     }
   }, [fetchedPhotos, error, storedPhotos, setStoredPhotos])
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (photos.length === 0) {
     return <div>Error: There was a problem fetching the photos.</div>;
   }
 
   return (
-    <Wrapper>
+    <Wrapper className="mb-4">
       <Stack>
 
         <div>

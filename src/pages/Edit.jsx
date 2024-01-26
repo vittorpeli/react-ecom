@@ -9,10 +9,7 @@ import { useSelected } from '../hooks/useSelected';
 
 export const Edit = () => {
   const { id } = useParams();
-
   const selectedPhoto = useSelected(id);
-  
-  const [photos, setPhotos] = useState([]);
   const [selectedPhotoData, setSelectedPhotoData] = useState({
     name: "",
     description: "",
@@ -32,15 +29,10 @@ export const Edit = () => {
   }
 
   useEffect(() => {
-    if (selectedPhoto) {
-      setPhotos([selectedPhoto]);
+    if (selectedPhoto && Object.keys(selectedPhoto).length > 0) {
       setSelectedPhotoData(selectedPhoto);
     }
   }, [selectedPhoto]);
-
-  if (!photos && photos.length === 0) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <Wrapper className="mb-4">
@@ -49,7 +41,7 @@ export const Edit = () => {
           <Navbar owner={true}/>
         </div>
 
-        <h2>{photos.name}</h2>
+        <h2>{selectedPhotoData.name}</h2>
         <figure>
           <Stack>
             <img className="max-h-screen max-w-screen rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]" src={selectedPhotoData.url} alt={selectedPhotoData.name} />
