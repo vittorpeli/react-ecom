@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom"
 import { Wrapper } from '../components/layouts/Wrapper/Wrapper';
 import { Stack } from '../components/layouts/Stack/Stack';
 import { Navbar } from '../components/ui/Navbar';
-import { Button } from '../components/ui/Button/Button';
+// import { Button } from '../components/ui/Button/Button';
 import { useSelected } from '../hooks/useSelected';
+import { ProductForm } from '../components/ui/ProductForm';
 
 export const Edit = () => {
   const { id } = useParams();
@@ -16,17 +17,17 @@ export const Edit = () => {
     price: 0,
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setSelectedPhotoData((prevData) => ({
-      ...prevData,
-      [name]: value
-    }));
-  }
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setSelectedPhotoData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value
+  //   }));
+  // }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  }
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  // }
 
   useEffect(() => {
     if (selectedPhoto && Object.keys(selectedPhoto).length > 0) {
@@ -49,24 +50,14 @@ export const Edit = () => {
         </figure>
 
         <div className='w-full min-w-96 px-4'>
-          <form>
-            <Stack>
-              <label htmlFor="name">Name</label>
-              <input className='pl-2' type="text" name='name' value={selectedPhotoData.name} onChange={handleChange}/>
-
-              <label htmlFor="desc">Desc</label>
-              <textarea className='pl-2' type="text" name="desc" rows={4} cols={50} onChange={handleChange}>
-                {selectedPhotoData.description}
-              </textarea>
-
-              <label htmlFor="price">Price</label>
-              <input className='pl-2' type="number" name="price" value={selectedPhotoData.price} onChange={handleChange}/>
-
-              <Wrapper>
-                <Button type='submit' onClick={handleSubmit}>Update Photo</Button>
-              </Wrapper> 
-            </Stack>
-          </form>
+          <ProductForm 
+            btnLabel="Update Photo"
+            namePlaceholder={selectedPhotoData.name}
+            urlPlaceholder={selectedPhotoData.url}
+            id={selectedPhotoData.id}
+            descPlaceholder={selectedPhotoData.description}
+            pricePlaceholder={selectedPhotoData.price} 
+          />
         </div>
         
 

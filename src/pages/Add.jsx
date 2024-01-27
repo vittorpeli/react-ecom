@@ -18,7 +18,14 @@ export const Add = () => {
           <Stack>
             <h1>Add a Photo</h1>
             <Box>
-              <ProductForm />
+              <ProductForm 
+                btnLabel="Add Photo"
+                create={true}
+                namePlaceholder="Name"
+                urlPlaceholder="Photo URL"
+                idPlaceholder="Photo ID"
+                pricePlaceholder={0} 
+              />
             </Box>
           </Stack>
         </Center>
