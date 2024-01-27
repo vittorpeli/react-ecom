@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useParams } from "react-router-dom"
-// import { getSelectedPhoto } from '../utils/api';
+import { useParams } from "react-router-dom";
 import { Wrapper } from '../components/layouts/Wrapper/Wrapper';
 import { Stack } from '../components/layouts/Stack/Stack';
 import { Navbar } from '../components/ui/Navbar';
-// import { Button } from '../components/ui/Button/Button';
 import { useSelected } from '../hooks/useSelected';
 import { ProductForm } from '../components/ui/ProductForm';
 
@@ -16,18 +14,6 @@ export const Edit = () => {
     description: "",
     price: 0,
   });
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setSelectedPhotoData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value
-  //   }));
-  // }
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  // }
 
   useEffect(() => {
     if (selectedPhoto && Object.keys(selectedPhoto).length > 0) {

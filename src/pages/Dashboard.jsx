@@ -1,8 +1,6 @@
 import { useEffect, useState, useMemo } from "react"
-// import { API } from "../utils/api"
 import { useFetch } from "../hooks/useFetch";
 import { useStorage } from "../hooks/useStorage";
-// import '../global.css';
 
 import { Grid } from "../components/layouts/Grid/Grid"
 import { Stack } from "../components/layouts/Stack/Stack"

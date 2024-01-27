@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Link, useNavigate, useParams} from "react-router-dom";
 import { CartContext } from "../contexts/CartContext"
 import { useSelected } from "../hooks/useSelected";
-// import { getSelectedPhoto } from "../utils/api";
 
 //Layouts
 import { Stack } from "../components/layouts/Stack/Stack"
