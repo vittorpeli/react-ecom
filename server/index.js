@@ -7,12 +7,14 @@ const app = express();
 
 const port = 3001;
 
-app.use(express.json());
-
-app.use(cors({
+let corsOptions = {
   allowedHeaders: ['*'],
   maxAge: 10
-}));
+}
+
+app.use(cors(corsOptions));
+
+app.use(express.json());
 
 app.use('/api', router);
 
