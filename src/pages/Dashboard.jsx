@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react"
-import { API } from "../utils/api"
+// import { API } from "../utils/api"
 import { useFetch } from "../hooks/useFetch";
 import { useStorage } from "../hooks/useStorage";
 // import '../global.css';
@@ -17,7 +17,7 @@ import { Search } from "../components/ui/Search";
 export const Dashboard = () => {
   const [photos, setPhotos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: fetchedPhotos, error } = useFetch(API);
+  const { data: fetchedPhotos, error } = useFetch("photos");
   const [storedPhotos, setStoredPhotos] = useStorage('sparrow-photography');
 
   const filteredPhotos = useMemo(() => Array.isArray(photos)

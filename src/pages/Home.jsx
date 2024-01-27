@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { useStorage } from "../hooks/useStorage";
-import { API } from "../utils/api";
 
 // Layouts
 import { Wrapper } from "../components/layouts/Wrapper/Wrapper";
@@ -16,7 +15,7 @@ import { Footer } from "../components/ui/Footer";
 
 export const Home = () => {
   const [photos, setPhotos] = useState([]);
-  const { data: fetchedPhotos, error, loading } = useFetch(API);
+  const { data: fetchedPhotos, error, loading } = useFetch("photos");
   const [storedPhotos, setStoredPhotos] = useStorage('sparrow-photography');
 
   useEffect(() => {
