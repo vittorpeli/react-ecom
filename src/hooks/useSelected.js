@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"
 import { useFetch } from "./useFetch";
-import { API } from "../utils/api";
 
 export const useSelected = (id) => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const { data: photosData, error } = useFetch(API);
+  const { data: photosData, error } = useFetch("photos");
 
   useEffect(() => {
     if (error) {

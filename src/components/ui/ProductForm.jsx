@@ -12,8 +12,9 @@ export const ProductForm = ({
   pricePlaceholder, 
   descPlaceholder, 
   create = false, 
-  btnLabel}) => {
-
+  btnLabel,
+  onSubmit
+}) => {
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
   const [id, setId] = useState('');
@@ -43,12 +44,12 @@ export const ProductForm = ({
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log({name, url, id, desc, price})
+    onSubmit({id, name, url, desc, price});
   }
 
   return (
     <Wrapper>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Stack>
           <FormInput 
             type="text"
@@ -103,7 +104,7 @@ export const ProductForm = ({
             placeholder={pricePlaceholder}
           />
           
-          <Button type='submit' onClick={handleSubmit}>{btnLabel}</Button>
+          <Button type='submit'>{btnLabel}</Button>
           
         </Stack>
       </form>

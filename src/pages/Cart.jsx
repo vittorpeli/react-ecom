@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../contexts/CartContext'
-import { API } from '../utils/api'
 // import { useNavigate } from 'react-router-dom'
 import { checkout } from '../utils/checkout'
 
@@ -17,7 +16,7 @@ export const Cart = () => {
   // const navigate = useNavigate();
   const [photos, setPhotos] = useState([])
   const { getItemsInCart, removeFromCart, clearCart } = useContext(CartContext);
-  const { data: fetchedPhotos, error} = useFetch(API);
+  const { data: fetchedPhotos, error} = useFetch("photos");
   const [storedPhotos, setStoredPhotos] = useStorage('sparrow-photography');
 
   const handleCheckout = async () => {
