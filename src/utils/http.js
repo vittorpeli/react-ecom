@@ -1,13 +1,35 @@
 const url = "http://localhost:3001/api/photos"
 
-export const createPhoto = async (photo) => {
-  const headers = new Headers({
-    "Content-Type": "application/json"
-  })
-
-  const response = await fetch(url, {
+export const createPhoto = (photo) => {
+  return request(url, {
     method: "POST",
-    body: JSON.stringify(photo),
+    body: photo,
+  })
+}
+
+export const editPhoto = (photo, id) => {
+  return request(`${url}/${id}`, {
+    method: "PUT",
+    body: photo,
+  })
+}
+
+async function request(path, options) {
+  const headers = new Headers()
+
+  if(options.body) {
+    headers.append('Content-Type', 'application/json')
+  }
+
+  if (options.headers) {
+    Object.entries(options.headers).forEach(({name, value}) => {
+      headers.append(name, value)
+    });
+  }
+
+  const response = await fetch(path, {
+    method: options.method,
+    body: JSON.stringify(options.body),
     headers,
   })
 
@@ -23,3 +45,5 @@ export const createPhoto = async (photo) => {
 
   throw new Error(response, body);
 }
+
+// export default new Http(url);

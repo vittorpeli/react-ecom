@@ -105,6 +105,17 @@ export const ProductForm = ({
           />
           
           <Button type='submit'>{btnLabel}</Button>
+
+          {create ?
+            ""
+            :
+            <button 
+              type="submit" 
+              className="text-sm font-medium cursor pointer bg-transparent text-red-500 border-none underline hover:text-opacity-60 focus:text-opacity-60"
+            >
+              Delete
+            </button>
+          }
           
         </Stack>
       </form>

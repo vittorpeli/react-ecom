@@ -1,25 +1,36 @@
-import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
+import { useSelected } from '../hooks/useSelected';
+
 import { Wrapper } from '../components/layouts/Wrapper/Wrapper';
 import { Stack } from '../components/layouts/Stack/Stack';
 import { Navbar } from '../components/ui/Navbar';
-import { useSelected } from '../hooks/useSelected';
 import { ProductForm } from '../components/ui/ProductForm';
+import { editPhoto } from "../utils/http";
 
 export const Edit = () => {
   const { id } = useParams();
   const selectedPhoto = useSelected(id);
-  const [selectedPhotoData, setSelectedPhotoData] = useState({
-    name: "",
-    description: "",
-    price: 0,
-  });
 
-  useEffect(() => {
-    if (selectedPhoto && Object.keys(selectedPhoto).length > 0) {
-      setSelectedPhotoData(selectedPhoto);
+  async function handleSubmit(formData) {
+    const photos = {
+      ID: formData.id,
+      name: formData.name, 
+      url: formData.url, 
+      description: formData.description, 
+      price: formData.price
     }
-  }, [selectedPhoto]);
+
+    const response = await editPhoto(photos, id);
+    console.log(response);
+  }
+
+  if (!selectedPhoto) {
+    return <div>Loading...</div>;
+  }
+
+  if (selectedPhoto.length === 0) {
+    return <div>Error: There was a problem fetching the photos.</div>;
+  }
 
   return (
     <Wrapper className="mb-4">
@@ -28,21 +39,22 @@ export const Edit = () => {
           <Navbar owner={true}/>
         </div>
 
-        <h2>{selectedPhotoData.name}</h2>
+        <h2>{selectedPhoto.name}</h2>
         <figure>
           <Stack>
-            <img className="max-h-screen max-w-screen rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]" src={selectedPhotoData.url} alt={selectedPhotoData.name} />
+            <img className="max-h-screen max-w-screen rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]" src={selectedPhoto.url} alt={selectedPhoto.name} />
           </Stack>
         </figure>
 
         <div className='w-full min-w-96 px-4'>
           <ProductForm 
+            onSubmit={handleSubmit}
             btnLabel="Update Photo"
-            namePlaceholder={selectedPhotoData.name}
-            urlPlaceholder={selectedPhotoData.url}
-            id={selectedPhotoData.id}
-            descPlaceholder={selectedPhotoData.description}
-            pricePlaceholder={selectedPhotoData.price} 
+            namePlaceholder={selectedPhoto.name}
+            urlPlaceholder={selectedPhoto.url}
+            id={selectedPhoto.id}
+            descPlaceholder={selectedPhoto.description}
+            pricePlaceholder={selectedPhoto.price} 
           />
         </div>
         
