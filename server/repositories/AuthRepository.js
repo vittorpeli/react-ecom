@@ -8,7 +8,7 @@ export async function findUserByEmail(email) {
 
 export async function findUserByName(name) {
   const user = await db.query('SELECT * FROM users WHERE name = $1', [name]);
-  return user;
+  return user[0];
 }
 
 export async function createUser({ name, email, password }) {

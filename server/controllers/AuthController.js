@@ -10,28 +10,33 @@ function generateToken(user) {
 async function login(req, res) {
   const { name, password } = req.body;
 
-  const userArray = await findUserByName(name);
+  try {
+    const user = await findUserByName(name);
 
-  if (!userArray || userArray.length === 0) {
-    return res.status(401).json({ error: "Invalid name" });
-  } 
-
-  let authenticatedUser;
-
-  for(const user of userArray) {
-    if(await comparePassword(password, user.password)) {
-      authenticatedUser = user;
-      break;
+    if (!user) {
+      throw new Error('User not found');
     }
-  }
 
-  if(!authenticatedUser) {
-    return res.status(401).json({ error: "Invalid password" });
-  }
+    const isPasswordValid = await comparePassword(password, user);
 
-  const token = generateToken(authenticatedUser);
-  res.header('Authorization', token);
-  res.json({ ...authenticatedUser, token });
+    if (!isPasswordValid) {
+      throw new Error('Invalid password');
+    }
+
+    res.header('Authorization', generateToken(user));
+    res.status(200).json({
+      status: true,
+      message: "Account login successful",
+      data: user
+    })
+  } catch (error) {
+    console.error(error);
+
+    res.status(error.statusCode || 500).json({
+      status: false,
+      message: error.message || "Internal Server Error"
+    })
+  }
 }
 
 async function register(req, res) {
@@ -43,9 +48,12 @@ async function register(req, res) {
   }
 
   const newUser = await createUser({ name, email, password });
-  const token = generateToken(newUser);
-  res.header('Authorization', token);
-  res.json({ token });
+  res.header('Authorization', generateToken(newUser));
+  res.status(200).json({
+    status: true,
+    message: "Account login successful",
+    data: newUser,
+  });
 }
 
 async function getAll(req, res) {
