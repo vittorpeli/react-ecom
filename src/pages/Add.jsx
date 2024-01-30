@@ -7,8 +7,11 @@ import { ProductForm } from "../components/ui/ProductForm"
 
 import { create } from "../utils/http"
 import endpoints  from "../utils/endpoints"
+import { useNavigate } from "react-router-dom"
 
 export const Add = () => {
+  const navigate = useNavigate();
+
   async function handleSubmit(formData) {
     const photo = {
       id: formData.id,
@@ -22,6 +25,8 @@ export const Add = () => {
 
     const response = await create(photosURL, photo);
     console.log(response);
+
+    navigate("/dashboard")
   }
 
   return (

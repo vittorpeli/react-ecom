@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelected } from '../hooks/useSelected';
 
 import { Wrapper } from '../components/layouts/Wrapper/Wrapper';
@@ -10,6 +10,7 @@ import endpoints  from "../utils/endpoints";
 
 export const Edit = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const selectedPhoto = useSelected(id);
 
   async function handleSubmit(formData) {
@@ -25,6 +26,8 @@ export const Edit = () => {
 
     const response = await edit(photosURL, photos, id);
     console.log(response);
+
+    navigate("/dashboard");
   }
 
   if (!selectedPhoto) {
