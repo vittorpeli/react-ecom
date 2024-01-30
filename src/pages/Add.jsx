@@ -5,7 +5,8 @@ import { Wrapper } from "../components/layouts/Wrapper/Wrapper"
 import { Navbar } from "../components/ui/Navbar"
 import { ProductForm } from "../components/ui/ProductForm"
 
-import { createPhoto } from "../utils/http"
+import { create } from "../utils/http"
+import endpoints  from "../utils/endpoints"
 
 export const Add = () => {
   async function handleSubmit(formData) {
@@ -17,7 +18,9 @@ export const Add = () => {
       price: formData.price
     }
 
-    const response = await createPhoto(photo);
+    const { photosURL } = endpoints;
+
+    const response = await create(photosURL, photo);
     console.log(response);
   }
 

@@ -5,7 +5,8 @@ import { Wrapper } from '../components/layouts/Wrapper/Wrapper';
 import { Stack } from '../components/layouts/Stack/Stack';
 import { Navbar } from '../components/ui/Navbar';
 import { ProductForm } from '../components/ui/ProductForm';
-import { editPhoto } from "../utils/http";
+import { edit } from "../utils/http";
+import endpoints  from "../utils/endpoints";
 
 export const Edit = () => {
   const { id } = useParams();
@@ -20,7 +21,9 @@ export const Edit = () => {
       price: formData.price
     }
 
-    const response = await editPhoto(photos, id);
+    const { photosURL } = endpoints;
+
+    const response = await edit(photosURL, photos, id);
     console.log(response);
   }
 
