@@ -7,8 +7,11 @@ import { AuthForm } from "../../components/ui/AuthForm"
 
 import { create } from "../../utils/http"
 import endpoints  from "../../utils/endpoints"
+import { useNavigate } from "react-router-dom"
 
 export const Login = () => {
+  const navigate = useNavigate();
+
   async function handleSubmit(formData) {
     const user = {
       name: formData.name,
@@ -19,6 +22,8 @@ export const Login = () => {
 
     const response = await create(authLogIn, user);
     console.log(response);
+
+    navigate("/dashboard");
   }
 
   return (
