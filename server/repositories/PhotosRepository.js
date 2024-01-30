@@ -12,10 +12,8 @@ export async function getSelectedPhoto(id) {
 }
 
 export async function findByName(name) {
-  const photos = await getPhotos();
-  const selectedPhoto = photos.find((p) => p.name === name);
-
-  return selectedPhoto;
+  const row = await db.query(`SELECT * FROM photos WHERE name = $1`, [name]);
+  return row;
 }
 
 export async function create({ id, name, url, description, price }) {

@@ -68,12 +68,6 @@ async function update(req, res) {
     return res.status(404).json("Photo not found!");
   }
 
-  const photoByName = await findByName(name);
-
-  if(photoByName && photoByName.ID !== id) {
-    return res.status(409).json("Photo's name is already in use!");
-  }
-
   const photo = await postUpdate({
     ID, name, url, description, price
   })
