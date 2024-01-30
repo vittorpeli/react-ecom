@@ -1,16 +1,21 @@
-const url = "http://localhost:3001/api/photos"
-
-export const createPhoto = (photo) => {
+export const create = (url, body) => {
   return request(url, {
     method: "POST",
-    body: photo,
+    body: body,
   })
 }
 
-export const editPhoto = (photo, id) => {
+export const edit = (url, body, id) => {
   return request(`${url}/${id}`, {
     method: "PUT",
-    body: photo,
+    body: body,
+  })
+}
+
+export const destroy = (url, body, id) => {
+  return request(`${url}/${id}`, {
+    method: "DELETE",
+    body: body,
   })
 }
 
