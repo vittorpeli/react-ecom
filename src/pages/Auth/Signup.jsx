@@ -5,9 +5,21 @@ import { Wrapper } from "../../components/layouts/Wrapper/Wrapper"
 import { Navbar } from "../../components/ui/Navbar"
 import { AuthForm } from "../../components/ui/AuthForm"
 
+import { create } from "../../utils/http"
+import endpoints  from "../../utils/endpoints"
+
 export const Signup = () => {
-  async function handleSubmit() {
-    
+  async function handleSubmit(formData) {
+    const user = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    }
+
+    const { authSignUp } = endpoints;
+
+    const response = await create(authSignUp, user);
+    console.log(response);
   }
 
   return (

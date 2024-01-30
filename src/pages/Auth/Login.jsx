@@ -5,9 +5,20 @@ import { Navbar } from "../../components/ui/Navbar"
 import { Box } from "../../components/layouts/Box/Box"
 import { AuthForm } from "../../components/ui/AuthForm"
 
-export const Login = () => {
-  async function handleSubmit() {
+import { create } from "../../utils/http"
+import endpoints  from "../../utils/endpoints"
 
+export const Login = () => {
+  async function handleSubmit(formData) {
+    const user = {
+      name: formData.name,
+      password: formData.password
+    }
+
+    const { authLogIn } = endpoints;
+
+    const response = await create(authLogIn, user);
+    console.log(response);
   }
 
   return (

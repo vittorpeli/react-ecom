@@ -2,6 +2,7 @@ export const create = (url, body) => {
   return request(url, {
     method: "POST",
     body: body,
+    headers: { 'Content-Type': 'application/json' }
   })
 }
 
