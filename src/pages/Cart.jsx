@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../contexts/CartContext'
-// import { useNavigate } from 'react-router-dom'
-import { checkout } from '../utils/checkout'
+import endpoints from '../utils/endpoints'
+import { create } from '../utils/http'
 
 import { Stack } from "../components/layouts/Stack/Stack"
 import { Wrapper } from "../components/layouts/Wrapper/Wrapper"
@@ -13,19 +13,36 @@ import { useFetch } from '../hooks/useFetch'
 import { useStorage } from '../hooks/useStorage'
 
 export const Cart = () => {
-  // const navigate = useNavigate();
   const [photos, setPhotos] = useState([])
-  const { getItemsInCart, removeFromCart, clearCart } = useContext(CartContext);
+  const { getItemsInCart, removeFromCart } = useContext(CartContext);
   const { data: fetchedPhotos, error} = useFetch("photos");
   const [storedPhotos, setStoredPhotos] = useStorage('sparrow-photography');
 
-  const handleCheckout = async () => {
+  async function handleCheckout () {
     try {
       const photosInCart = await getItemsInCart(photos);
-      const success_url = 'http://localhost:8000/success';
-      const cancel_url = 'http://localhost:8000/cancel';
+    
+      const { stripeURL } = endpoints;
+    
+      const sessionBody = {
+        cart: photosInCart.map(photo => photo.id),
+      }
 
-      await checkout(photosInCart, success_url, cancel_url, clearCart);
+      const response = await fetch(stripeURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sessionBody),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create session');
+      }
+    
+      const session = await create(stripeURL, sessionBody)
+      console.log(session);
+
     } catch (error) {
       console.error(error.message);
     }
@@ -53,7 +70,7 @@ export const Cart = () => {
 
   const photosInCart = getItemsInCart(photos);
 
-  if (!photosInCart) {
+  if (!Array.isArray(photosInCart) || photosInCart.length === 0) {
     return <p>You have no photos in your cart</p>
   }
 
@@ -106,3 +123,4 @@ export const Cart = () => {
     </Wrapper>
   )
 }
+

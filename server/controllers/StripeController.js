@@ -7,6 +7,37 @@ const stripe = new Stripe(String(process.env.STRIPE_SECRET_KEY), {
   apiVersion: "2023-10-16",
 })
 
+async function getProducts(req, res) {
+  const products = await stripe.products.list({
+    limit: 3,
+  });
+  res.status(200).json({ products });
+}
+
+async function createProduct(req, res) {
+  const { name, description, images, price } = req.body;
+  
+  if (!name || !description || !images || !price) {
+    return res.status(400).json({ error: 'Missing required parameters' });
+  }
+
+  const product = await stripe.products.create({
+    name: name,
+    description: description,
+    images: [images]
+  })
+
+  const priceData = {
+    currency: 'usd',
+    product: product.id,
+    unit_amount: parseFloat(price) * 100,
+  }
+
+  const priceObj = await stripe.prices.create(priceData);
+
+  res.status(201).json({ product, price: priceObj });
+}
+
 async function createSession (req, res) {
   try {
     const { cart } = req.body;
@@ -38,10 +69,11 @@ async function createSession (req, res) {
       apiKey: process.env.STRIPE_SECRET_KEY,
     });
 
-    res.status(201).json({ sessionId: session.id });
+    res.status(201).json({ sessionId: session.id, sessionURL: session.url, success_url: session.success_url, cancel_url: session.cancel_url, lineItems: lineItems });
   } catch (error) {
-    res.status(500).json({ error });
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
-export default { createSession };
+export default { createSession, getProducts, createProduct };
