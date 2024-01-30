@@ -13,7 +13,8 @@ export const ProductForm = ({
   descPlaceholder, 
   create = false, 
   btnLabel,
-  onSubmit
+  onSubmit,
+  onDelete
 }) => {
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
@@ -45,6 +46,12 @@ export const ProductForm = ({
     e.preventDefault();
 
     onSubmit({id, name, url, desc, price});
+  }
+
+  function handleDelete(e) {
+    e.preventDefault();
+
+    onDelete();
   }
 
   return (
@@ -111,6 +118,7 @@ export const ProductForm = ({
             :
             <button 
               type="submit" 
+              onClick={handleDelete}
               className="text-sm font-medium cursor pointer bg-transparent text-red-500 border-none underline hover:text-opacity-60 focus:text-opacity-60"
             >
               Delete

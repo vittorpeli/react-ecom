@@ -13,10 +13,9 @@ export const edit = (url, body, id) => {
   })
 }
 
-export const destroy = (url, body, id) => {
+export const destroy = (url, id) => {
   return request(`${url}/${id}`, {
-    method: "DELETE",
-    body: body,
+    method: "DELETE"
   })
 }
 
