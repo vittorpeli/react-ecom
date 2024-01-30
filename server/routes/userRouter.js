@@ -1,6 +1,5 @@
 import express  from "express";
 import AuthController from "../controllers/AuthController.js";
-// import authenticateToken from "../middlewares/auth.js";
 const userRouter = express.Router();
 
 userRouter.get("/", AuthController.getAll);

@@ -3,9 +3,13 @@ import { Center } from "../../components/layouts/Center/Center"
 import { Stack } from "../../components/layouts/Stack/Stack"
 import { Wrapper } from "../../components/layouts/Wrapper/Wrapper"
 import { Navbar } from "../../components/ui/Navbar"
-import { SignForm } from "../../components/ui/SignForm"
+import { AuthForm } from "../../components/ui/AuthForm"
 
 export const Signup = () => {
+  async function handleSubmit() {
+    
+  }
+
   return (
     <Wrapper>
       <Stack>
@@ -18,7 +22,9 @@ export const Signup = () => {
           <Stack>
             <h1>Sign Up</h1>
             <Box>  
-              <SignForm
+              <AuthForm 
+                btnLabel="Sign Up"
+                onSubmit={handleSubmit}
               />
             </Box>
           </Stack>

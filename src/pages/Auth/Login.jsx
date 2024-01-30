@@ -2,10 +2,14 @@ import { Stack } from "../../components/layouts/Stack/Stack"
 import { Center } from "../../components/layouts/Center/Center"
 import { Wrapper } from "../../components/layouts/Wrapper/Wrapper"
 import { Navbar } from "../../components/ui/Navbar"
-import { LoginForm } from "../../components/ui/LoginForm"
 import { Box } from "../../components/layouts/Box/Box"
+import { AuthForm } from "../../components/ui/AuthForm"
 
 export const Login = () => {
+  async function handleSubmit() {
+
+  }
+
   return (
     <Wrapper>
       <Stack>
@@ -18,7 +22,11 @@ export const Login = () => {
           <Stack>
             <h1>Login</h1>
             <Box>  
-              <LoginForm />
+              <AuthForm 
+                login={true}
+                btnLabel="Login"
+                onSubmit={handleSubmit}
+              />
             </Box>
           </Stack>
         </Center>

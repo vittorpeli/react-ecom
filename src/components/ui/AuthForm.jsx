@@ -9,7 +9,12 @@ import PropTypes from 'prop-types'
 import useErrors from '../../hooks/useErrors'
 import isValidEmail from '../../utils/isValidEmail';
 
-export const SignForm = ({ error }) => {
+export const AuthForm = ({ 
+  login = false, 
+  error,
+  btnLabel,
+  onSubmit
+}) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -49,9 +54,7 @@ export const SignForm = ({ error }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    console.log({
-      name, email, password
-    })
+    onSubmit({ name, email, password });
   }
 
   return (
@@ -68,14 +71,19 @@ export const SignForm = ({ error }) => {
             />
             {error && <small className="text-red-600 text-xs mt-2">{error}</small>}
 
-            <FormInput 
+
+            {login ? 
+              ""
+              :
+              <FormInput 
               type="email"
               value={email}
               name="Email"
               placeholder="Email Address"
               onChange={handleEmailChange}
               error={getErrorMessageByFieldName('email')}
-            />
+              />
+            }
             {error && <small className="text-red-600 text-xs mt-2">{error}</small>}
 
             <FormInput 
@@ -88,19 +96,19 @@ export const SignForm = ({ error }) => {
             />
             {error && <small className="text-red-600 text-xs mt-2">{error}</small>}
 
-            <Button type='submit'>Sign Up</Button>
+            <Button type='submit'>{btnLabel}</Button>
           </Stack>
         </form>
       </Wrapper>
   )
 }
 
-SignForm.propTypes = {
+AuthForm.propTypes = {
   nameError: PropTypes.string,
   emailError: PropTypes.string,
 }
 
-SignForm.defaultProps = {
+AuthForm.defaultProps = {
   nameError: null,
   emailError: null
 }
