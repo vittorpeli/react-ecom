@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../contexts/CartContext'
 import endpoints from '../utils/endpoints'
@@ -13,9 +14,13 @@ import { useFetch } from '../hooks/useFetch'
 import { useStorage } from '../hooks/useStorage'
 
 export const Cart = () => {
-  const [photos, setPhotos] = useState([])
+  const [photos, setPhotos] = useState([]);
+  const [redirect, setRedirect] = useState(false);
+  const sessionRef = useRef(null);
+
   const { getItemsInCart, removeFromCart } = useContext(CartContext);
-  const { data: fetchedPhotos, error} = useFetch("photos");
+
+  const { data: fetchedPhotos, error, loading} = useFetch("photos");
   const [storedPhotos, setStoredPhotos] = useStorage('sparrow-photography');
 
   async function handleCheckout () {
@@ -42,7 +47,12 @@ export const Cart = () => {
     
       const session = await create(stripeURL, sessionBody)
       console.log(session);
+      console.log(session.sessionURL);
 
+      sessionRef.current = session;
+      // console.log(sessionRef.current.url);
+
+      setRedirect(true);
     } catch (error) {
       console.error(error.message);
     }
@@ -74,12 +84,27 @@ export const Cart = () => {
     return <p>You have no photos in your cart</p>
   }
 
-  if (!photos) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (photos.length === 0) {
+  if (error) {
     return <div>Error: There was a problem fetching the photos.</div>;
+  }
+
+  let formattedPrice;
+
+  if (Array.isArray(photosInCart)) {
+    let totalPrice = 0;
+
+    for (const photo of photosInCart) {
+      const photoPrice = parseFloat(photo.price);
+      if (!isNaN(photoPrice)) {
+        totalPrice += photoPrice;
+      }
+    }
+  
+    formattedPrice = totalPrice.toFixed(2);
   }
 
   return (
@@ -113,10 +138,15 @@ export const Cart = () => {
 
         <div className="flex flex-row  items-center ml-auto mr-4">
           <span className='font-semibold mr-4 mb-4'>
-            Total Price: ${photosInCart.reduce((total, item) => total + item.price, 0)}
+            Total Price: ${formattedPrice}
           </span>
-          <Button variant="ghost" className="mb-4" onClick={() => handleCheckout()}>
-            Finish Checkout
+          <Button 
+            variant="ghost" 
+            className="mb-4" 
+            onClick={() => handleCheckout()}
+            href={redirect ? sessionRef.current.sessionURL : undefined}
+          >
+            {redirect ? "Go to Stripe" : "Finish Checkout"}
           </Button>
         </div>
       </Stack>
