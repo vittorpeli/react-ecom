@@ -5,9 +5,11 @@ My goal was to learn the basics of full-stack development before using framework
 - I built the client-side with React with Tailwind CSS for styling using utilities.
 - Built the server with Express and PostgreSQL.
 - Also used Stripe API to implement the payment of a product.
-  For my work environment:
+
+For my work environment:
+
 - Based the design on [Chris Ferdinandi's web app project](https://gomakethings.com/courses/web-apps/)
-- I works with tasks on a Notion's Kanban Board. [Example of tasks](https://github.com/vittorpeli/react-ecom/blob/main/kanban-screenshot.png)
+- I worked with tasks on a Notion's Kanban Board. [Example of tasks](https://github.com/vittorpeli/react-ecom/blob/main/kanban-screenshot.png)
 
 # How to navigate this project
 
