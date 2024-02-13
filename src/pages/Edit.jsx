@@ -66,7 +66,7 @@ export const Edit = () => {
               </span>
               Return to dashboard
             </Button>
-          </Link>
+        </Link>
         <figure>
           <Stack>
             <img className="max-h-screen max-w-screen rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]" src={selectedPhoto.url} alt={selectedPhoto.name} />
