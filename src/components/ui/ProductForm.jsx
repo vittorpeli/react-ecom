@@ -21,6 +21,7 @@ export const ProductForm = ({
   const [id, setId] = useState('');
   const [desc, setDesc] = useState('');
   const [price, setPrice] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleNameChange(e) {
     setName(e.target.value);
@@ -42,10 +43,14 @@ export const ProductForm = ({
     setPrice(e.target.value);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    onSubmit({id, name, url, desc, price});
+    setIsSubmitting(true);
+
+    await onSubmit({id, name, url, desc, price});
+
+    setIsSubmitting(false);
   }
 
   function handleDelete(e) {
@@ -64,6 +69,7 @@ export const ProductForm = ({
             value={name}
             placeholder={namePlaceholder}
             onChange={handleNameChange}
+            disabled={isSubmitting}
           />
 
           <FormInput 
@@ -72,6 +78,7 @@ export const ProductForm = ({
             value={url}
             placeholder={urlPlaceholder}
             onChange={handleUrlChange}
+            disabled={isSubmitting}
           />
 
           {create ? 
@@ -81,6 +88,7 @@ export const ProductForm = ({
             value={id}
             placeholder={idPlaceholder}
             onChange={handleIdChange}
+            disabled={isSubmitting}
           />
           :
           ""
@@ -100,7 +108,8 @@ export const ProductForm = ({
             value={desc}
             placeholder={descPlaceholder}
             onChange={handleDescChange}
-            className="w-full p-2.5 rounded outline-none border-none shadow-lg focus:border-solid focus:border-2 focus:border-blue-400"
+            disabled={isSubmitting}
+            className="w-full p-2.5 rounded outline-none border-none resize-none shadow-lg focus:border-solid focus:border-2 focus:border-blue-400"
           />
 
           <FormInput 
@@ -109,6 +118,7 @@ export const ProductForm = ({
             value={price}
             onChange={handlePriceChange}
             placeholder={pricePlaceholder}
+            disabled={isSubmitting}
           />
           
           <Button type='submit'>{btnLabel}</Button>

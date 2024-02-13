@@ -18,12 +18,12 @@ export const Edit = () => {
 
   async function handleSubmit(formData) {
     const photos = {
-      ID: formData.id,
+      ID: id,
       name: formData.name, 
       url: formData.url, 
       description: formData.description, 
       price: formData.price
-    }
+    };
 
     const { photosURL } = endpoints;
 

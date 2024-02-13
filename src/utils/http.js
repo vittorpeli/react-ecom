@@ -10,6 +10,7 @@ export const edit = (url, body, id) => {
   return request(`${url}/${id}`, {
     method: "PUT",
     body: body,
+    headers: { 'Content-Type': 'application/json' }
   })
 }
 
