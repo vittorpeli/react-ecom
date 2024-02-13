@@ -1,4 +1,6 @@
 # App Todo
-- Refactor redirects in checkout
-- Refactor edit form and Update Controller
-- Deploy App
+
+- [] Refactor redirecting in checkout
+- [x] Refactor edit form
+- [] Refactor Update Controller
+- [] Deploy App
